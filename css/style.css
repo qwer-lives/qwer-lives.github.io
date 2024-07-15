@@ -5,6 +5,16 @@ html {
   max-width: 80em;
   margin: auto;
 }
+#last_updated {
+  width: 100%;
+  margin: auto;
+  float: right;
+  padding-right: 2em;
+  color: #dfdfdf;
+  text-align: right;
+  font-family: Verdana, Helvetica, Arial, sans-serif;
+  font-size: 0.8em;
+}
 #title {
   padding-top: 0.5em;
   padding-bottom: 0.75em;
