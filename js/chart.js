@@ -164,7 +164,7 @@ function updateChart() {
 }
 
 anychart.onDocumentReady(function () {
-    document.getElementById("last_updated").innerHTML = 'Last updated: 2024-07-15';
+    document.getElementById("last_updated").innerHTML = 'Last updated: 2024-07-16';
     buildChart();
     updateChart();
 });
