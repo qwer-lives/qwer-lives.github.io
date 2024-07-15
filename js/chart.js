@@ -35,6 +35,7 @@ function getViewDiv(elemData, divClass) {
 
 function buildChart() {
     if (chart) {
+    
         return;
     }
     var customColorScale = anychart.scales.ordinalColor();
@@ -46,6 +47,7 @@ function buildChart() {
     customColorScale.colors(["red","magenta","dodgerblue","lime","yellow","darkorange"]);
     
     chart = anychart.calendar();
+    chart.contextMenu(false);
     chart.background("#22282D");
     chart.colorScale(customColorScale);
     chart.colorRange()
@@ -93,7 +95,7 @@ function buildChart() {
     
     chart.listen("pointClick", function(e) {
         var row = chart.data().row(e.dataIndex);
-      
+        
         dateString = row['x'];
         var elemDate = document.getElementById("elem_date");
         elemDate.innerHTML = dateString;
@@ -108,7 +110,7 @@ function buildChart() {
 
     chart.listen("chartDraw", function() {
         document.getElementById("container").style.height = (chart.getActualHeight() + 20) + "px";
-        credits = document.querySelector(".anychart-credits-text");
+        credits = document.querySelector(".anychart-credits");
         if (credits) {
             credits.remove();
         }
