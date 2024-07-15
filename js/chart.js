@@ -73,7 +73,9 @@ function buildChart() {
             .stroke({color: '#dfdfdf', thickness: 2});
   
     var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    if (!isMobile) {
+    if (isMobile) {
+        chart.tooltip(false);
+    } else {
         chart.tooltip().allowLeaveStage(true).position("left-top").useHtml(true).format(function() {
             var text = "";
             text += "<div align='left'>";
