@@ -46,9 +46,20 @@
       </label>
     </div>
     <div id="filter_links" class="filter_div">
+      <span>Link:</span>
       <label>
-        <input type="checkbox" name="link_box" value="Link" class="link_check" onchange="updateChart()">
-        Must have link
+        <input type="radio" name="link_radio" value="All" class="link_radio" onchange="updateChart()" checked/>
+        All
+      </label>
+      <span>|</span>
+      <label>
+        <input type="radio" name="link_radio" value="Private" class="link_radio" onchange="updateChart()"/>
+        Only private
+      </label>
+      <span>|</span>
+      <label>
+        <input type="radio" name="link_radio" value="Public" class="link_radio" onchange="updateChart()"/>
+        Only public
       </label>
     </div>
 
