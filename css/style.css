@@ -36,13 +36,13 @@ html {
 #filter_members {
   float: left;
   text-align: left;
-  width: 60%;
+  width: 50%;
   padding-left: 2em;
 }
 #filter_links {
   float: right;
   text-align: right;
-  width: 30%;
+  width: 42%;
   padding-right: 2em;
 }
 #container {
