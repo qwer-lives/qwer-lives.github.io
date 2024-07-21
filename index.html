@@ -23,46 +23,56 @@
   <div id="main_container">
     <div id="last_updated"></div>
     <div id="title">QWER Lives Tracker</div>
-    <div id="filter_members" class="filter_div">
-      <span>Members:</span>
-      <label>
-        <input type="checkbox" name="chodan_box" value="Chodan" class="member_check" onchange="updateChart()" checked>
-        Chodan
-      </label>
-      <span>|</span>
-      <label>
-        <input type="checkbox" name="magenta_box" value="Magenta" class="member_check" onchange="updateChart()" checked>
-        Magenta
-      </label>
-      <span>|</span>
-      <label>
-        <input type="checkbox" name="hina_box" value="Hina" class="member_check" onchange="updateChart()" checked>
-        Hina
-      </label>
-      <span>|</span>
-      <label>
-        <input type="checkbox" name="siyeon_box" value="Siyeon" class="member_check" onchange="updateChart()" checked>
-        Siyeon
-      </label>
+    <div id="filter_container">
+        <div id="filter_members" class="filter_div">
+          <span>Members:</span>
+          <label>
+            <input type="checkbox" name="chodan_box" value="Chodan" class="member_check" onchange="updateChart()" checked>
+            Chodan
+          </label>
+          <span>|</span>
+          <label>
+            <input type="checkbox" name="magenta_box" value="Magenta" class="member_check" onchange="updateChart()" checked>
+            Magenta
+          </label>
+          <span>|</span>
+          <label>
+            <input type="checkbox" name="hina_box" value="Hina" class="member_check" onchange="updateChart()" checked>
+            Hina
+          </label>
+          <span>|</span>
+          <label>
+            <input type="checkbox" name="siyeon_box" value="Siyeon" class="member_check" onchange="updateChart()" checked>
+            Siyeon
+          </label>
+        </div>
+        <div id="filter_links" class="filter_div">
+          <span>Link:</span>
+          <label>
+            <input type="radio" name="link_radio" value="All" class="link_radio" onchange="updateChart()" checked/>
+            All
+          </label>
+          <span>|</span>
+          <label>
+            <input type="radio" name="link_radio" value="Private" class="link_radio" onchange="updateChart()"/>
+            Only private
+          </label>
+          <span>|</span>
+          <label>
+            <input type="radio" name="link_radio" value="Public" class="link_radio" onchange="updateChart()"/>
+            Only public
+          </label>
+        </div>
     </div>
-    <div id="filter_links" class="filter_div">
-      <span>Link:</span>
-      <label>
-        <input type="radio" name="link_radio" value="All" class="link_radio" onchange="updateChart()" checked/>
-        All
-      </label>
-      <span>|</span>
-      <label>
-        <input type="radio" name="link_radio" value="Private" class="link_radio" onchange="updateChart()"/>
-        Only private
-      </label>
-      <span>|</span>
-      <label>
-        <input type="radio" name="link_radio" value="Public" class="link_radio" onchange="updateChart()"/>
-        Only public
-      </label>
+    <hr id="sep">
+    <div id="legend_container">
+      <span class="box">Chodan</span>
+      <span class="box">Magenta</span>
+      <span class="box">Hina</span>
+      <span class="box">Siyeon</span>
+      <span class="box">Hapbang/ft.</span>
+      <span class="box">Multiple</span>
     </div>
-
     <div id="container"></div>
     <div id="elem_date"></div>
     <div id="elem_info_container"></div>

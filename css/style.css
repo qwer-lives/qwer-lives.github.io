@@ -33,6 +33,9 @@ html {
   font-family: Verdana, Helvetica, Arial, sans-serif;
   font-size: 0.95em;
 }
+#filter_container {
+  display: flow-root;
+}
 #filter_members {
   float: left;
   text-align: left;
@@ -44,6 +47,37 @@ html {
   text-align: right;
   width: 42%;
   padding-right: 2em;
+}
+#sep {
+  width: 95%;
+  margin-top: 0.75em;
+  margin-bottom: 1em;
+  color: #474747;
+  border-color: #474747;
+  border-style: solid;
+}
+#legend_container {
+  margin-top: 1.5em;
+  margin-bottom: 1em;
+  color: #dfdfdf;
+  text-align: center;
+  font-family: Verdana, Helvetica, Arial, sans-serif;
+  font-size: 0.95em;
+}
+.box {
+  position: relative;
+  margin-left: 3em;
+  --color: black;
+}
+.box:before {
+  position: absolute;
+  left: -1.7em;
+  content: "";
+  height: 1.1em;
+  width: 1.1em;
+  margin-bottom: 0.75em;
+  border: 1px solid #474747;
+  background-color: var(--color);
 }
 #container {
   width: 100%;
