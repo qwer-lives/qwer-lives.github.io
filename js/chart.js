@@ -135,6 +135,7 @@ function buildChart() {
     }
     
     chart.listen("pointClick", function(e) {
+        console.log(e);
         if (selectedPath != null) {
             selectedPath.setAttribute("stroke", "none");
         }
@@ -226,6 +227,7 @@ function updateChart() {
     
     chart.data(data);
     chart.draw();
+    
     document.getElementById("elem_date").innerHTML = '';
     document.getElementById("elem_info_container").innerHTML = '';
 }
