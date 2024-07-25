@@ -240,6 +240,7 @@ function modifyBoxIfNeeded(urlParams, field) {
 }
 
 anychart.onDocumentReady(function () {
+    console.log(updateDate);
     document.getElementById("last_updated").innerHTML = 'Last updated: ' + updateDate;
     const legendBoxes = document.querySelectorAll('.box');
     for (let i = 0; i < legendBoxes.length; ++i) {
