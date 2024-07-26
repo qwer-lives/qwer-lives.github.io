@@ -1,4 +1,4 @@
-const memberColors = ["#e6e3d5", "magenta", "dodgerblue", "lime", "yellow", "darkorange"];
+const memberColors = ["#e6e3d5", "#fc28fc", "dodgerblue", "lime", "yellow", "darkorange"];
 const memberToValue = { "Chodan": 1, "Magenta": 2, "Hina": 4, "Siyeon": 8};
 
 var chart = null;
