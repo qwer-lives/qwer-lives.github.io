@@ -3,20 +3,31 @@ html {
 }
 #main_container {
   max-width: 80em;
+  padding-top: 0.3em;
   margin: auto;
 }
-#last_updated {
-  width: 100%;
+#change_lang_div {
+  width: 20%;
+  margin: auto;
+  float: left;
+  padding-left: 2.5em;
+  color: #dfdfdf;
+  text-align: left;
+  font-family: Verdana, Helvetica, Arial, sans-serif;
+  font-size: 0.8em;
+}
+#last_updated_div {
+  width: 20%;
   margin: auto;
   float: right;
-  padding-right: 2em;
+  padding-right: 2.5em;
   color: #dfdfdf;
   text-align: right;
   font-family: Verdana, Helvetica, Arial, sans-serif;
   font-size: 0.8em;
 }
 #title {
-  padding-top: 0.5em;
+  padding-top: 1em;
   padding-bottom: 0.75em;
   margin: auto;
   width: 100%;
@@ -24,6 +35,18 @@ html {
   font-family: Verdana, Helvetica, Arial, sans-serif;
   font-size: 1.7em;
   text-align: center;
+}
+.titleQ {
+  color: #e6e3d5;
+}
+.titleW {
+  color: magenta;
+}
+.titleE {
+  color: dodgerblue;
+}
+.titleR {
+  color: lime;
 }
 .filter_div {
   padding-top: 0.5em;
@@ -48,7 +71,7 @@ html {
   width: 42%;
   padding-right: 2em;
 }
-#sep {
+.separator {
   width: 95%;
   margin-top: 0.75em;
   margin-bottom: 1em;
@@ -85,7 +108,7 @@ html {
   padding: 0;
 }
 #elem_date {
-  padding-top: 2em;
+  padding-top: 0.5em;
   padding-bottom: 1em;
   margin: auto;
   width: 100%;
@@ -110,6 +133,7 @@ html {
   border-radius: 0.5em;
   padding: 0.7em 0.7em;
   margin: 0.25em;
+  line-height: 1.2em; 
 }
 a:link, a:visited {
   color: #dfdfdf;

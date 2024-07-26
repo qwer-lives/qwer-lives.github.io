@@ -154,6 +154,7 @@ function buildChart() {
         for (let i = 0; i < elems.length; i++) {
             htmlContent += getViewDiv(elems[i], "info_elem");
         }
+        document.getElementById("sep_before_info").style.visibility = 'visible';
         document.getElementById("elem_info_container").innerHTML = htmlContent;
     });
 
@@ -230,6 +231,7 @@ function updateChart() {
     
     document.getElementById("elem_date").innerHTML = '';
     document.getElementById("elem_info_container").innerHTML = '';
+    document.getElementById("sep_before_info").style.visibility = 'hidden';
 }
 
 function modifyBoxIfNeeded(urlParams, field) {
@@ -241,7 +243,7 @@ function modifyBoxIfNeeded(urlParams, field) {
 
 anychart.onDocumentReady(function () {
     console.log(updateDate);
-    document.getElementById("last_updated").innerHTML = 'Last updated: ' + updateDate;
+    document.getElementById("last_updated").innerHTML = updateDate;
     const legendBoxes = document.querySelectorAll('.box');
     for (let i = 0; i < legendBoxes.length; ++i) {
         legendBoxes[i].style.setProperty('--color', memberColors[i]);
