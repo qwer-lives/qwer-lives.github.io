@@ -17,7 +17,7 @@ function getViewDiv(elemData, divClass) {
             text += "<br>";
         }
         cKey = key.charAt(0).toUpperCase() + key.slice(1);
-        if (key == "link" && value != "Private") {
+        if (key == "link" && value.startsWith("http")) {
             var hostname = new URL(value).hostname;
             hostname = hostname.replace('www.', '');
             hostname = hostname.replace('.com', '');
@@ -178,16 +178,23 @@ function updateChart() {
     const includeTwitchData = urlParams.get('dataTwitch');
     const breakdownMembers = getBreakdownMembers();
     
-    const linkRadio = document.querySelector('.link_radio:checked');
-    const linkRadioValue = linkRadio.getAttribute('value');
+    const linkCheckboxes = document.querySelectorAll('.link_check:checked');
+    const selectedLinks = [...linkCheckboxes].map(e => (e.getAttribute('value')));
     const memberCheckboxes = document.querySelectorAll('.member_check:checked');
     const selectedMembers = [...memberCheckboxes].map(e => (e.getAttribute('value')));
     
     var data = [];
     for (const [date, row] of Object.entries(fullData)) {
         var goodElems = row.filter(elem => {
-            const hasLink = elem["link"] && elem["link"] != "Private";
-            if ((linkRadioValue == 'Private' && hasLink) || (linkRadioValue == 'Public') && !hasLink) {
+            const hasPublicLink = (elem["link"] && elem["link"].startsWith("http"));
+            const hasPrivateLink = (elem["link"] && elem["link"].startsWith("Private"));
+            if (!elem["link"] && !selectedLinks.includes("Missing")) {
+                return false;
+            } 
+            if (hasPrivateLink && !selectedLinks.includes("Private")) {
+                return false;
+            } 
+            if (hasPublicLink && !selectedLinks.includes("Public")) {
                 return false;
             }
             if (elem["platform"] == "DataTwitch" && !includeTwitchData) {
@@ -255,14 +262,9 @@ anychart.onDocumentReady(function () {
     modifyBoxIfNeeded(urlParams, 'magenta');
     modifyBoxIfNeeded(urlParams, 'hina');
     modifyBoxIfNeeded(urlParams, 'siyeon');
-    const linkMode = urlParams.get('link');
-    if (linkMode === 'all') {
-        document.getElementById('link_all').checked = true;
-    } else if (linkMode === 'private') {
-        document.getElementById('link_private').checked = true;
-    } else if (linkMode === 'public') {
-        document.getElementById('link_public').checked = true;
-    }
+    modifyBoxIfNeeded(urlParams, 'link_public');
+    modifyBoxIfNeeded(urlParams, 'link_private');
+    modifyBoxIfNeeded(urlParams, 'link_missing');
     
     buildChart();
     updateChart();

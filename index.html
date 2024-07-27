@@ -58,20 +58,20 @@
         </label>
       </div>
      <div id="filter_links" class="filter_div">
-        <span data-i18n-key="links_filter">Link:</span>
-        <label data-i18n-key="link_all">
-          <input type="radio" id="link_all" name="link_radio" value="All" class="link_radio" onchange="updateChart()" checked/>
-          All
+        <span data-i18n-key="links_filter">Links:</span>
+        <label data-i18n-key="link_public">
+          <input type="checkbox" id="link_public" name="link_public_box" value="Public" class="link_check" onchange="updateChart()" checked/>
+          Public
         </label>
         <span>|</span>
         <label data-i18n-key="link_private">
-          <input type="radio" id="link_private" name="link_radio" value="Private" class="link_radio" onchange="updateChart()"/>
-          Only private
+          <input type="checkbox" id="link_private" name="link_private_box" value="Private" class="link_check" onchange="updateChart()" checked/>
+          Private
         </label>
         <span>|</span>
-        <label data-i18n-key="link_public">
-          <input type="radio" id="link_public" name="link_radio" value="Public" class="link_radio" onchange="updateChart()"/>
-          Only public
+        <label data-i18n-key="link_missing">
+          <input type="checkbox" id="link_missing" name="link_missing_box" value="Missing" class="link_check" onchange="updateChart()"/>
+          Missing
         </label>
       </div>
     </div>
