@@ -24,59 +24,61 @@
 
  <body>
   <div id="main_container">
-    <div id="change_lang_div" style="visibility:hidden;">
-      KR / EN
+    <div id="change_lang_div">
+      <span id="lang_select_kr" onclick="changeLocale('kr')">KR</span>
+      <span> / </span>
+      <span id="lang_select_en" onclick="changeLocale('en')">EN</span>
     </div>
     <div id="last_updated_div">
-      <span data-i18n-key="last_updated">Last updated: </span><span id="last_updated"></span>
+      <span data-i18n-key="last_updated">Last updated</span><span>: </span><span id="last_updated"></span>
     </div>
     <div id="title">
-      <span class="titleQ">Q</span><span class="titleW">W</span><span class="titleE">E</span><span class="titleR">R</span>
+      <span class="title_letter">Q</span><span class="title_letter">W</span><span class="title_letter">E</span><span class="title_letter">R</span>
       <span>Lives Tracker</span>
     </div>
     <div id="filter_container">
       <div id="filter_members" class="filter_div">
-        <span data-i18n-key="members">Members:</span>
-        <label data-i18n-key="chodan">
+        <span data-i18n-key="members">Members</span>:
+        <label>
           <input type="checkbox" id="chodan_box" name="chodan_box" value="Chodan" class="member_check" onchange="updateChart()" checked>
-          Chodan
+          <span data-i18n-key="chodan">Chodan</span>
         </label>
-        <span>|</span>
-        <label data-i18n-key="magenta">
+        <span class="horizontal_separator"> | </span>
+        <label>
           <input type="checkbox" id="magenta_box" name="magenta_box" value="Magenta" class="member_check" onchange="updateChart()" checked>
-          Magenta
+          <span data-i18n-key="magenta">Magenta</span>
         </label>
-        <span>|</span>
-        <label data-i18n-key="hina">
+        <span class="horizontal_separator"> | </span>
+        <label>
           <input type="checkbox" id="hina_box" name="hina_box" value="Hina" class="member_check" onchange="updateChart()" checked>
-          Hina
+          <span data-i18n-key="hina">Hina</span>
         </label>
-        <span>|</span>
-        <label data-i18n-key="siyeon">
+        <span class="horizontal_separator"> | </span>
+        <label>
           <input type="checkbox" id="siyeon_box" name="siyeon_box" value="Siyeon" class="member_check" onchange="updateChart()" checked>
-          Siyeon
+          <span data-i18n-key="siyeon">Siyeon</span>
         </label>
       </div>
      <div id="filter_links" class="filter_div">
-        <span data-i18n-key="links_filter">Links:</span>
-        <label data-i18n-key="link_public">
+        <span data-i18n-key="links_filter">Links</span>:
+        <label>
           <input type="checkbox" id="link_public" name="link_public_box" value="Public" class="link_check" onchange="updateChart()" checked/>
-          Public
+          <span data-i18n-key="link_public">Public</span>
         </label>
-        <span>|</span>
-        <label data-i18n-key="link_private">
+        <span class="horizontal_separator"> | </span>
+        <label>
           <input type="checkbox" id="link_private" name="link_private_box" value="Private" class="link_check" onchange="updateChart()" checked/>
-          Private
+          <span data-i18n-key="private">Private</span>
         </label>
-        <span>|</span>
-        <label data-i18n-key="link_missing">
+        <span class="horizontal_separator"> | </span>
+        <label">
           <input type="checkbox" id="link_missing" name="link_missing_box" value="Missing" class="link_check" onchange="updateChart()"/>
-          Missing
+          <span data-i18n-key="link_missing">Missing</span>
         </label>
       </div>
     </div>
-    <hr class="separator">
-    <div id="legend_container">
+    <hr class="separator"">
+    <div id="legend_container" style="display: none;">
       <span class="box" data-i18n-key="chodan">Chodan</span>
       <span class="box" data-i18n-key="magenta">Magenta</span>
       <span class="box" data-i18n-key="hina">Hina</span>
@@ -89,8 +91,8 @@
     <div id="elem_date"></div>
     <div id="elem_info_container"></div>
   </div>
-  <span style="visibility:hidden;">헐</span>
-  <script src="js/chart.js"></script>
+  <span style="display: none;">헐</span>
+  <script src="js/chart.js" defer></script>
   <script src="js/i18.js"></script>
  </body>
 </html>

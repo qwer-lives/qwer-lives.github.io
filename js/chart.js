@@ -16,18 +16,37 @@ function getViewDiv(elemData, divClass) {
         if (j > 0) {
             text += "<br>";
         }
+        i18key = "field_" + key.replace(/ /g,"_");
         cKey = key.charAt(0).toUpperCase() + key.slice(1);
-        if (key == "link" && value.startsWith("http")) {
-            var hostname = new URL(value).hostname;
-            hostname = hostname.replace('www.', '');
-            hostname = hostname.replace('.com', '');
-            hostname = hostname.replace('.io', '');
-            hostname = hostname.charAt(0).toUpperCase() + hostname.slice(1);
-            text += cKey + ": <a href='" + value + "'>" + hostname + "</a>";
-        } else if (Array.isArray(value)) {
-            text += cKey + ": " + value.join(", ");
+        i18val = translateKey(i18key);
+        keySpan = '<span data-i18n-key="' + i18key + '">' + i18val + "</span>";
+        text += keySpan + "<span>: </span>";
+        if (key == "link") {
+            if (value.startsWith("http")) {
+                var hostname = new URL(value).hostname;
+                hostname = hostname.replace('www.', '');
+                hostname = hostname.replace('.com', '');
+                hostname = hostname.replace('.io', '');
+                hostname = hostname.charAt(0).toUpperCase() + hostname.slice(1);
+                text += "<a href='" + value + "'>" + hostname + "</a>";
+            } else {
+                text += '<span data-i18n-key="' + value + '">' + translateKey(value) + "</span>";
+            }
+        } else if (key == "members" || key == "people") {
+            for (let i = 0; i < value.length; ++i) {
+                if (i > 0) {
+                    text += "<span>, </span>";
+                }
+                text += '<span data-i18n-key="' + value[i] + '">' + translateKey(value[i]) + "</span>";
+            }
+        } else if (key == "platform") {
+            text += '<span data-i18n-key="' + value[0] + '">' + translateKey(value[0]) + "</span>";
+            if (value.length == 2) {
+                text += "<span> (</span>";
+                text += '<span data-i18n-key="' + value[1] + '">' + translateKey(value[1]) + "</span><span>)</span>";
+            }
         } else {
-            text += cKey + ": " + value;
+            text += value;
         }
     }
     text += "</div></div>"
@@ -135,7 +154,6 @@ function buildChart() {
     }
     
     chart.listen("pointClick", function(e) {
-        console.log(e);
         if (selectedPath != null) {
             selectedPath.setAttribute("stroke", "none");
         }
@@ -249,8 +267,17 @@ function modifyBoxIfNeeded(urlParams, field) {
 }
 
 anychart.onDocumentReady(function () {
-    console.log(updateDate);
+    initializeUserLocale();
     document.getElementById("last_updated").innerHTML = updateDate;
+    
+    const titleLetters = document.querySelectorAll('.title_letter');
+    for (let i = 0; i < titleLetters.length; ++i) {
+        titleLetters[i].style.setProperty('color', memberColors[i]);
+    }
+    const memberCheckboxes = document.querySelectorAll('.member_check');
+    for (let i = 0; i < memberCheckboxes.length; ++i) {
+        memberCheckboxes[i].style.setProperty('accent-color', memberColors[i]);
+    }
     const legendBoxes = document.querySelectorAll('.box');
     for (let i = 0; i < legendBoxes.length; ++i) {
         legendBoxes[i].style.setProperty('--color', memberColors[i]);
@@ -268,4 +295,5 @@ anychart.onDocumentReady(function () {
     
     buildChart();
     updateChart();
+    document.getElementsByTagName("html")[0].style.visibility = "visible";
 });

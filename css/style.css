@@ -1,12 +1,17 @@
+/* Main */
 html {
-  background-color: #22282D
+  background-color: #22282D;
+  visibility: hidden;
 }
 #main_container {
   max-width: 80em;
   min-width: 57em;
   padding-top: 0.3em;
   margin: auto;
+  line-height: 1.2em; 
 }
+
+/* Header */
 #change_lang_div {
   width: 20%;
   margin: auto;
@@ -16,6 +21,13 @@ html {
   text-align: left;
   font-family: Verdana, Helvetica, Arial, sans-serif;
   font-size: 0.8em;
+}
+.lang_select_on {
+  font-weight: bold;
+}
+.lang_select_off {
+  cursor: pointer;
+  text-decoration: underline;
 }
 #last_updated_div {
   width: 20%;
@@ -27,9 +39,11 @@ html {
   font-family: Verdana, Helvetica, Arial, sans-serif;
   font-size: 0.8em;
 }
+
+/* Title */
 #title {
-  padding-top: 1em;
-  padding-bottom: 0.75em;
+  padding-top: 1.5em;
+  padding-bottom: 1.5em;
   margin: auto;
   width: 100%;
   color: #dfdfdf;
@@ -37,18 +51,8 @@ html {
   font-size: 1.7em;
   text-align: center;
 }
-.titleQ {
-  color: #e6e3d5;
-}
-.titleW {
-  color: #fc28fc;
-}
-.titleE {
-  color: dodgerblue;
-}
-.titleR {
-  color: lime;
-}
+
+/* Filters */
 .filter_div {
   padding-top: 0.5em;
   padding-bottom: 0.5em;
@@ -72,6 +76,11 @@ html {
   width: 40%;
   padding-right: 2em;
 }
+input {
+  transform: scale(1.3);
+}
+
+/* Separator */
 .separator {
   width: 95%;
   margin-top: 0.75em;
@@ -80,6 +89,11 @@ html {
   border-color: #474747;
   border-style: solid;
 }
+.horizontal_separator {
+  color: #474747;
+}
+
+/* Legend */
 #legend_container {
   margin-top: 1.5em;
   margin-bottom: 1em;
@@ -90,7 +104,7 @@ html {
 }
 .box {
   position: relative;
-  margin-left: 3em;
+  margin-left: 6em;
   --color: black;
 }
 .box:before {
@@ -103,11 +117,19 @@ html {
   border: 1px solid #474747;
   background-color: var(--color);
 }
+
+/* Chart */
 #container {
   width: 100%;
   margin: 0;
   padding: 0;
 }
+.info_tooltip {
+  text-align: left;
+  max-width: 22em;
+}
+
+/* Info details */
 #elem_date {
   padding-top: 0.5em;
   padding-bottom: 1em;
@@ -118,14 +140,6 @@ html {
   font-size: 1.2em;
   text-align: center;
 }
-.info_tooltip {
-  text-align: left;
-  max-width: 22em;
-}
-#info_container {
-  width: 100%;
-  display: inline-block;
-}
 .info_elem {
   float: left;
   color: #dfdfdf;
@@ -134,8 +148,9 @@ html {
   border-radius: 0.5em;
   padding: 0.7em 0.7em;
   margin: 0.25em;
-  line-height: 1.2em; 
 }
+
+/* Others */
 a:link, a:visited {
   color: #dfdfdf;
 }
