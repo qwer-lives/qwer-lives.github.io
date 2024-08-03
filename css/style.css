@@ -7,7 +7,7 @@ html {
   min-height: calc(100vh - 2em); /* you have to minus header and footer width */
 }
 #main_container {
-  max-width: 80em;
+  max-width: 90em;
   min-width: 57em;
   padding-top: 0.3em;
   margin: auto;

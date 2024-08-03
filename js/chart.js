@@ -7,8 +7,13 @@ var selectedPath = null;
 function getViewDiv(elemData, divClass) {
     var text = "<div class='" + divClass + "'>"
     if (elemData["thumbnail"]) {
-        text += "<div align='center'><img width='20' src='" + elemData["thumbnail"] + "'></div><div class='fields_container'>";
+        tPath = elemData["thumbnail"][0];
+        tWidth = elemData["thumbnail"][1];
+        tHeight = elemData["thumbnail"][2];
+        text += "<div align='center'><img width='" + tWidth + "' height='" + tHeight + "' ";
+        text += "src='" + tPath + "'></div>";
     }
+    text += "<div class='fields_container'>";
     for (const [j, [key, value]] of Object.entries(Object.entries(elemData))) {
         if (key == "thumbnail") {
             continue;
