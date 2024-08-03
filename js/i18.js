@@ -27,7 +27,7 @@ const translations = {
         "private": "Private",
         "link_missing": "Missing",
         "field_title": "Title",
-        "field_members": "Members",
+        "field_members": "Mem",
         "field_people": "People",
         "field_start_time": "Start time",
         "field_duration": "Duration",

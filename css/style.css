@@ -3,6 +3,9 @@ html {
   background-color: #22282D;
   visibility: hidden;
 }
+#body_container {
+  min-height: calc(100vh - 2em); /* you have to minus header and footer width */
+}
 #main_container {
   max-width: 80em;
   min-width: 57em;
@@ -126,10 +129,21 @@ input {
 }
 .info_tooltip {
   text-align: left;
-  max-width: 22em;
+  min-width: 18em; /* for loading images */
+  max-width: 20em;
+}
+.fields_container {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 20em;
 }
 
 /* Info details */
+#elem_info_container {
+  display: flow-root;
+  padding-bottom: 1em;
+}
 #elem_date {
   padding-top: 0.5em;
   padding-bottom: 1em;
@@ -143,23 +157,35 @@ input {
 .info_elem {
   float: left;
   color: #dfdfdf;
+  min-width: 10em;
   max-width: 20em;
   background-color: #2d333b;
   border-radius: 0.5em;
   padding: 0.7em 0.7em;
   margin: 0.25em;
 }
-
-/* Others */
-a:link, a:visited {
-  color: #dfdfdf;
-}
 img {
   max-height: 10em;
-  max-width: 20em;
+  max-width: 18em;
   height: auto;
   width: auto;
   border-radius: 0.3em;
   margin-bottom: 0.3em;
+  box-shadow: 0px 0px 3px #000;
+}
+.out_link:link, .out_link:visited {
+  color: #dfdfdf;
+}
+
+/* Footer */
+#footer {
+  margin-top: 0; /* take available whitespace */
+  height: 1em; /* calc height when limited content */
+  text-align: center;
+  font-family: Verdana, Helvetica, Arial, sans-serif;
+  font-size: 0.75em;
+}
+#email_link:link, #email_link:visited {
+  color: #474747;
 }
 

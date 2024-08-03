@@ -7,7 +7,7 @@ var selectedPath = null;
 function getViewDiv(elemData, divClass) {
     var text = "<div class='" + divClass + "'>"
     if (elemData["thumbnail"]) {
-        text += "<div align='center'><img width='20' src='" + elemData["thumbnail"] + "'></div><div>";
+        text += "<div align='center'><img width='20' src='" + elemData["thumbnail"] + "'></div><div class='fields_container'>";
     }
     for (const [j, [key, value]] of Object.entries(Object.entries(elemData))) {
         if (key == "thumbnail") {
@@ -28,7 +28,7 @@ function getViewDiv(elemData, divClass) {
                 hostname = hostname.replace('.com', '');
                 hostname = hostname.replace('.io', '');
                 hostname = hostname.charAt(0).toUpperCase() + hostname.slice(1);
-                text += "<a href='" + value + "'>" + hostname + "</a>";
+                text += "<a class='out_link' target='_blank' href='" + value + "'>" + hostname + "</a>";
             } else {
                 text += '<span data-i18n-key="' + value + '">' + translateKey(value) + "</span>";
             }
@@ -46,7 +46,7 @@ function getViewDiv(elemData, divClass) {
                 text += '<span data-i18n-key="' + value[1] + '">' + translateKey(value[1]) + "</span><span>)</span>";
             }
         } else {
-            text += value;
+            text += '<span>' + value + '</span>';
         }
     }
     text += "</div></div>"
