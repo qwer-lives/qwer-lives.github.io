@@ -15,7 +15,7 @@ function getViewDiv(elemData, divClass) {
     }
     text += "<div class='fields_container'>";
     for (const [j, [key, value]] of Object.entries(Object.entries(elemData))) {
-        if (key == "thumbnail") {
+        if (key == "thumbnail" || key == "account") {
             continue;
         }
         if (j > 0) {
@@ -45,10 +45,11 @@ function getViewDiv(elemData, divClass) {
                 text += '<span data-i18n-key="' + value[i] + '">' + translateKey(value[i]) + "</span>";
             }
         } else if (key == "platform") {
-            text += '<span data-i18n-key="' + value[0] + '">' + translateKey(value[0]) + "</span>";
-            if (value.length == 2) {
+            text += '<span data-i18n-key="' + value + '">' + translateKey(value) + "</span>";
+            if (elemData["account"]) {
+                const account = elemData["account"];
                 text += "<span> (</span>";
-                text += '<span data-i18n-key="' + value[1] + '">' + translateKey(value[1]) + "</span><span>)</span>";
+                text += '<span data-i18n-key="' + account + '">' + translateKey(account) + "</span><span>)</span>";
             }
         } else {
             text += '<span>' + value + '</span>';
