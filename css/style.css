@@ -166,9 +166,8 @@ input {
 }
 img {
   display: inline-block;
-  max-height: 10em;
   max-width: 18em;
-  height: auto;
+  height: 10em;
   width: auto;
   border-radius: 0.3em;
   margin-bottom: 0.3em;
