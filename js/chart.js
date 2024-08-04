@@ -10,8 +10,8 @@ function getViewDiv(elemData, divClass) {
         tPath = elemData["thumbnail"][0];
         tWidth = elemData["thumbnail"][1];
         tHeight = elemData["thumbnail"][2];
-        text += "<div align='center'><img width='" + tWidth + "' height='" + tHeight + "' ";
-        text += "src='" + tPath + "'></div>";
+        text += "<div align='center'><img src='" + tPath + "' ";
+        text += "width='" + tWidth + "' height='" + tHeight + "'/></div>";
     }
     text += "<div class='fields_container'>";
     for (const [j, [key, value]] of Object.entries(Object.entries(elemData))) {

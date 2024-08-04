@@ -165,6 +165,7 @@ input {
   margin: 0.25em;
 }
 img {
+  display: inline-block;
   max-height: 10em;
   max-width: 18em;
   height: auto;
