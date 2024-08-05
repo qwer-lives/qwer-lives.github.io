@@ -1,4 +1,5 @@
 <!doctype html>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <html lang="en">
 <head>
   <link href="https://cdn.anychart.com/releases/v8/css/anychart-ui.min.css" type="text/css" rel="stylesheet">
@@ -25,13 +26,15 @@
  <body>
   <div id="body_container">
   <div id="main_container">
-    <div id="change_lang_div">
-      <span id="lang_select_kr" onclick="changeLocale('kr')">KR</span>
-      <span> / </span>
-      <span id="lang_select_en" onclick="changeLocale('en')">EN</span>
-    </div>
-    <div id="last_updated_div">
-      <span data-i18n-key="last_updated">Last updated</span><span>: </span><span id="last_updated"></span>
+    <div id="header_container">
+      <div id="change_lang_div">
+        <span id="lang_select_kr" onclick="changeLocale('kr')">KR</span>
+        <span> / </span>
+        <span id="lang_select_en" onclick="changeLocale('en')">EN</span>
+      </div>
+      <div id="last_updated_div">
+        <span data-i18n-key="last_updated">Last updated</span><span>: </span><span id="last_updated"></span>
+      </div>
     </div>
     <div id="title">
       <span class="title_letter">Q</span><span class="title_letter">W</span><span class="title_letter">E</span><span class="title_letter">R</span>
@@ -60,7 +63,7 @@
           <span data-i18n-key="siyeon">Siyeon</span>
         </label>
       </div>
-     <div id="filter_links" class="filter_div">
+      <div id="filter_links" class="filter_div">
         <span data-i18n-key="links_filter">Links</span>:
         <label>
           <input type="checkbox" id="link_public" name="link_public_box" value="Public" class="link_check" onchange="updateChart()" checked/>
@@ -87,7 +90,9 @@
       <span class="box nogradient" data-i18n-key="hapbang">Hapbang/ft.</span>
       <span class="box nogradient" data-i18n-key="multiple">Multiple</span>
     </div>
-    <div id="container"></div>
+    <div id="container_chart">
+      <div id="container"></div>
+    </div>
     <hr id="sep_before_info" class="separator" style="visibility:hidden;">
     <div id="elem_date"></div>
     <div id="elem_info_container"></div>
