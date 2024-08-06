@@ -144,7 +144,6 @@ function buildChart() {
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     if (isMobile) {
         chart.tooltip(false);
-        
     } else {
         chart.tooltip().allowLeaveStage(true).position("left-top").useHtml(true).format(function() {
             var text = "";
@@ -299,12 +298,6 @@ anychart.onDocumentReady(function () {
     modifyBoxIfNeeded(urlParams, 'link_public');
     modifyBoxIfNeeded(urlParams, 'link_private');
     modifyBoxIfNeeded(urlParams, 'link_missing');
-    
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    if (isMobile) {
-        const filterLinks = document.querySelector("#filter_links");
-        filterLinks.id = "filter_links_mobile";
-    }
     
     buildChart();
     updateChart();
