@@ -1,8 +1,11 @@
+const memberNames = ["Chodan", "Magenta", "Hina", "Siyeon"];
 const memberColors = ["#e6e3d5", "#fc28fc", "dodgerblue", "lime", "yellow", "darkorange"];
-const memberToValue = { "Chodan": 1, "Magenta": 2, "Hina": 4, "Siyeon": 8};
 
 var chart = null;
 var selectedPath = null;
+var memberToValue = null;
+var hapbangValue = null;
+var multipleValue = null;
 
 function getViewDiv(elemData, divClass) {
     var text = "<div class='" + divClass + "'>"
@@ -90,13 +93,21 @@ function buildChart() {
         return;
     }
     const noGradientElems = document.querySelectorAll('.nogradient');
+    
+    memberToValue = {};
+    for (let i = 0; i < memberNames.length; ++i) {
+        memberToValue[memberNames[i]] = (1 << i);
+    }
+    hapbangValue = (1 << (memberNames.length - 1)) + 1;
+    multipleValue = hapbangValue + 1;
+    
 
     var rangesArray = [];
     var colorsArray = [];
     if (getBreakdownMembers()) {
-        for (let i = 1; i < (1 << 4); ++i) {
+        for (let i = 1; i < (1 << memberNames.length); ++i) {
             curColors = [];
-            for (let j = 0; j < 4; ++j) {
+            for (let j = 0; j < memberNames.length; ++j) {
                 if (i&(1<<j)) {
                     curColors.push(memberColors[j]);
                 }
@@ -109,10 +120,11 @@ function buildChart() {
             noGradientElems[i].style.display = 'none';
         }
     } else {
-        valuesAndExtra = [1, 2, 4, 8, 9, 10];
-        for (let i = 0; i < valuesAndExtra.length; i++) {
-            rangesArray.push({equal: valuesAndExtra[i]})
+        for (let i = 0; i < memberNames.length; i++) {
+            rangesArray.push({equal: memberToValue[memberNames[i]]});
         }
+        rangesArray.push({equal: hapbangValue});
+        rangesArray.push({equal: multipleValue});
         colorsArray = memberColors;
         for (let i = 0; i < noGradientElems.length; ++i) {
             noGradientElems[i].style.display = 'inline';
@@ -243,9 +255,9 @@ function updateChart() {
             }
         } else {
             if (goodElems.length > 1) {
-                rowValue = 10;
+                rowValue = multipleValue;
             } else if (goodElems[0]["members"].length > 1 || goodElems[0]["people"]) {
-                rowValue = 9;
+                rowValue = hapbangValue;
             } else {
                 rowValue = memberToValue[goodElems[0]["members"][0]];
             }
@@ -283,10 +295,6 @@ anychart.onDocumentReady(function () {
     const memberCheckboxes = document.querySelectorAll('.member_check');
     for (let i = 0; i < memberCheckboxes.length; ++i) {
         memberCheckboxes[i].style.setProperty('accent-color', memberColors[i]);
-    }
-    const legendBoxes = document.querySelectorAll('.box');
-    for (let i = 0; i < legendBoxes.length; ++i) {
-        legendBoxes[i].style.setProperty('--color', memberColors[i]);
     }
     
     const queryString = window.location.search;
