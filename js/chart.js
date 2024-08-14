@@ -172,12 +172,32 @@ function buildChart() {
     }
     
     chart.listen("pointClick", function(e) {
+        const row = chart.data().row(e.dataIndex);
+        if (!row) {
+            // Weird but happens
+            return;
+        }
+        
         if (selectedPath != null) {
             selectedPath.setAttribute("stroke", "none");
         }
-        const row = chart.data().row(e.dataIndex);
         const elemId = e.originalEvent.getOriginalEvent().target.he
         selectedPath = document.getElementById(elemId);
+        
+        /*newNode = selectedPath.cloneNode();
+        newNode.setAttribute("data-ac-wrapper-id", newNode.getAttribute("data-ac-wrapper-id") + "0");
+        newNode.id = newNode.id + "0";
+        newNode.setAttribute("stroke", "#dfdfdf");
+        newNode.setAttribute("stroke-", "#dfdfdf");
+        bBox = selectedPath.getBoundingClientRect();
+        #console.log(bBox);
+        const cx = bBox.x + bBox.width / 2;
+        const cy = bBox.y + bBox.height / 2;
+        console.log(cx);
+        console.log(cy);
+        newNode.setAttribute("transform", `rotate(45 ${cx} ${cy})`);
+        selectedPath.parentNode.insertBefore(newNode, selectedPath);*/
+        
         selectedPath.setAttribute("stroke", "#dfdfdf");
         selectedPath.setAttribute("stroke-width", "2");
         
