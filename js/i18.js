@@ -43,6 +43,7 @@ const translations = {
         "zenflix": "Zenflix",
         "chhzk": "Chzzk",
         "tv": "TV",
+        "showroom": "Showroom",
     },
     "kr": {
         "last_updated": "최근 수정일",
@@ -84,6 +85,7 @@ const translations = {
         "zenflix": "젠플릭스",
         "chhzk": "치지직",
         "tv": "TV",
+        "showroom": "쇼룸",
     }
 };
 

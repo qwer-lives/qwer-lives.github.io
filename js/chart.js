@@ -184,20 +184,6 @@ function buildChart() {
         const elemId = e.originalEvent.getOriginalEvent().target.he
         selectedPath = document.getElementById(elemId);
         
-        /*newNode = selectedPath.cloneNode();
-        newNode.setAttribute("data-ac-wrapper-id", newNode.getAttribute("data-ac-wrapper-id") + "0");
-        newNode.id = newNode.id + "0";
-        newNode.setAttribute("stroke", "#dfdfdf");
-        newNode.setAttribute("stroke-", "#dfdfdf");
-        bBox = selectedPath.getBoundingClientRect();
-        #console.log(bBox);
-        const cx = bBox.x + bBox.width / 2;
-        const cy = bBox.y + bBox.height / 2;
-        console.log(cx);
-        console.log(cy);
-        newNode.setAttribute("transform", `rotate(45 ${cx} ${cy})`);
-        selectedPath.parentNode.insertBefore(newNode, selectedPath);*/
-        
         selectedPath.setAttribute("stroke", "#dfdfdf");
         selectedPath.setAttribute("stroke-width", "2");
         
@@ -240,6 +226,7 @@ function updateChart() {
     const selectedMembers = [...memberCheckboxes].map(e => (e.getAttribute('value')));
     
     var data = [];
+    var indexHapbang = [];
     for (const [date, row] of Object.entries(fullData)) {
         var goodElems = row.filter(elem => {
             const hasPublicLink = (elem["link"] && elem["link"].startsWith("http"));
@@ -267,8 +254,12 @@ function updateChart() {
             continue;
         }
         var rowValue = 0;
+        var isHapbang = false;
         if (breakdownMembers) {
             for (let i = 0; i < goodElems.length; ++i) {
+                if (goodElems[i]["members"].length > 1) {
+                    isHapbang = true;
+                }
                 for (let j = 0; j < goodElems[i]["members"].length; ++j) {
                     rowValue |= memberToValue[goodElems[i]["members"][j]];
                 }
@@ -282,6 +273,7 @@ function updateChart() {
                 rowValue = memberToValue[goodElems[0]["members"][0]];
             }
         }
+        indexHapbang.push(isHapbang);
         data.push({
             x: date,
             value: rowValue,
@@ -291,6 +283,28 @@ function updateChart() {
     
     chart.data(data);
     chart.draw();
+    
+    if (breakdownMembers) {
+        const paths = document.querySelectorAll("g > path[fill-opacity='1']")
+        for (let i = 0; i < isHapbang.length; ++i) {
+            if (isHapbang[i]) {
+                const path = paths[i];
+                /*newNode = selectedPath.cloneNode();
+                newNode.setAttribute("data-ac-wrapper-id", newNode.getAttribute("data-ac-wrapper-id") + "0");
+                newNode.id = newNode.id + "0";
+                newNode.setAttribute("stroke", "#dfdfdf");
+                newNode.setAttribute("stroke-", "#dfdfdf");
+                bBox = selectedPath.getBoundingClientRect();
+                #console.log(bBox);
+                const cx = bBox.x + bBox.width / 2;
+                const cy = bBox.y + bBox.height / 2;
+                console.log(cx);
+                console.log(cy);
+                newNode.setAttribute("transform", `rotate(45 ${cx} ${cy})`);
+                selectedPath.parentNode.insertBefore(newNode, selectedPath);*/
+            }
+        }
+    }
     
     document.getElementById("elem_date").innerHTML = '';
     document.getElementById("elem_info_container").innerHTML = '';
