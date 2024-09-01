@@ -1,6 +1,6 @@
-var locale = "kr";
+var locale = "ko";
 
-const supportedLocales = ["en", "kr"];
+const supportedLocales = ["en", "ko"];
 
 const translations = {
     "en": {
@@ -54,7 +54,7 @@ const translations = {
         "tv": "TV",
         "showroom": "Showroom",
     },
-    "kr": {
+    "ko": {
         "last_updated": "최근 수정일",
         "members": "멤버",
         "chodan": "쵸단",
@@ -127,8 +127,8 @@ function translatePage() {
 
 function changeLocale(loc) {
     locale = loc;
-    document.querySelector("#lang_select_kr").classList.toggle("lang_select_on", (locale == "kr"));
-    document.querySelector("#lang_select_kr").classList.toggle("lang_select_off", (locale != "kr"));
+    document.querySelector("#lang_select_ko").classList.toggle("lang_select_on", (locale == "ko"));
+    document.querySelector("#lang_select_ko").classList.toggle("lang_select_off", (locale != "ko"));
     document.querySelector("#lang_select_en").classList.toggle("lang_select_on", (locale == "en"));
     document.querySelector("#lang_select_en").classList.toggle("lang_select_off", (locale != "en"));
     translatePage();
@@ -145,7 +145,7 @@ function initializeUserLocale() {
         }
     }
     if (!userLocale) {
-        userLocale = "en";
+        userLocale = "ko";
     }
     changeLocale(userLocale);
 }
