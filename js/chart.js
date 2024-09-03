@@ -208,6 +208,7 @@ function buildChart() {
         }
     });
     chart.container("container");
+    chart.draw();
 }
 
 function updateChart() {
@@ -282,7 +283,6 @@ function updateChart() {
     }
     
     chart.data(data);
-    chart.draw();
     
     /*if (breakdownMembers) {
         const paths = document.querySelectorAll("g > path[fill-opacity='1']")
