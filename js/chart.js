@@ -6,6 +6,7 @@ var selectedPath = null;
 var memberToValue = null;
 var hapbangValue = null;
 var multipleValue = null;
+var trainMode = false;
 
 function getViewDiv(elemData, divClass) {
     var text = "<div class='" + divClass + "'>"
@@ -18,7 +19,7 @@ function getViewDiv(elemData, divClass) {
     }
     text += "<div class='fields_container'>";
     for (const [j, [key, value]] of Object.entries(Object.entries(elemData))) {
-        if (key == "thumbnail" || key == "account") {
+        if (key == "thumbnail" || key == "account" || key == "train") {
             continue;
         }
         if (j > 0) {
@@ -101,7 +102,6 @@ function buildChart() {
     hapbangValue = (1 << (memberNames.length - 1)) + 1;
     multipleValue = hapbangValue + 1;
     
-
     var rangesArray = [];
     var colorsArray = [];
     if (getBreakdownMembers()) {
@@ -230,6 +230,9 @@ function updateChart() {
     var indexHapbang = [];
     for (const [date, row] of Object.entries(fullData)) {
         var goodElems = row.filter(elem => {
+            if (elem["title"] && elem["title"].includes("와따")) {
+                console.log(elem);
+            }
             const hasPublicLink = (elem["link"] && elem["link"].startsWith("http"));
             const hasPrivateLink = (elem["link"] && elem["link"].startsWith("Private"));
             if (!elem["link"] && !selectedLinks.includes("Missing")) {
@@ -242,6 +245,9 @@ function updateChart() {
                 return false;
             }
             if (elem["platform"] == "DataTwitch" && !includeTwitchData) {
+                return false;
+            }
+            if (trainMode && elem["train"] == "False") {
                 return false;
             }
             for (let mem of elem["members"]) {
@@ -330,13 +336,16 @@ anychart.onDocumentReady(function () {
     
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    modifyBoxIfNeeded(urlParams, 'chodan');
-    modifyBoxIfNeeded(urlParams, 'magenta');
-    modifyBoxIfNeeded(urlParams, 'hina');
-    modifyBoxIfNeeded(urlParams, 'siyeon');
-    modifyBoxIfNeeded(urlParams, 'link_public');
-    modifyBoxIfNeeded(urlParams, 'link_private');
-    modifyBoxIfNeeded(urlParams, 'link_missing');
+    if (urlParams.get("trainMode") == "true") {
+        trainMode = true;
+    }
+    modifyBoxIfNeeded(urlParams, "chodan");
+    modifyBoxIfNeeded(urlParams, "magenta");
+    modifyBoxIfNeeded(urlParams, "hina");
+    modifyBoxIfNeeded(urlParams, "siyeon");
+    modifyBoxIfNeeded(urlParams, "link_public");
+    modifyBoxIfNeeded(urlParams, "link_private");
+    modifyBoxIfNeeded(urlParams, "link_missing");
     
     buildChart();
     updateChart();
