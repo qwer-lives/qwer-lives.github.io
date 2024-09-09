@@ -230,9 +230,6 @@ function updateChart() {
     var indexHapbang = [];
     for (const [date, row] of Object.entries(fullData)) {
         var goodElems = row.filter(elem => {
-            if (elem["title"] && elem["title"].includes("와따")) {
-                console.log(elem);
-            }
             const hasPublicLink = (elem["link"] && elem["link"].startsWith("http"));
             const hasPrivateLink = (elem["link"] && elem["link"].startsWith("Private"));
             if (!elem["link"] && !selectedLinks.includes("Missing")) {
