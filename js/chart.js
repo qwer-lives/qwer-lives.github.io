@@ -10,13 +10,16 @@ var trainMode = false;
 
 function getViewDiv(elemData, divClass) {
     var text = "<div class='" + divClass + "'>"
+    tPath = "thumbs/missing.jpg";
+    tWidth = 290;
+    tHeight = 175;
     if (elemData["thumbnail"]) {
         tPath = elemData["thumbnail"][0];
         tWidth = elemData["thumbnail"][1];
         tHeight = elemData["thumbnail"][2];
-        text += "<div align='center'><img src='" + tPath + "' ";
-        text += "width='" + tWidth + "' height='" + tHeight + "'/></div>";
     }
+    text += "<div align='center'><img src='" + tPath + "' ";
+    text += "width='" + tWidth + "' height='" + tHeight + "'/></div>";
     text += "<div class='fields_container'>";
     for (const [j, [key, value]] of Object.entries(Object.entries(elemData))) {
         if (key == "thumbnail" || key == "account" || key == "train") {

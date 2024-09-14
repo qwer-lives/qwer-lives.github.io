@@ -187,6 +187,7 @@ input {
   color: #dfdfdf;
   min-width: 10em;
   max-width: 20em;
+  min-height: 18em;
   background-color: #2d333b;
   border-radius: 0.5em;
   padding: 0.7em 0.7em;
