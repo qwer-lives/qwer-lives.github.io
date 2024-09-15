@@ -147,7 +147,8 @@ input {
 
 /* Chart */
 #container_chart {
-  margin-left: 0.5em;
+  margin-left: 0.1em;
+  margin-right: 0.1em;
   overflow-y: hidden;
   overflow-x: auto;
 }
