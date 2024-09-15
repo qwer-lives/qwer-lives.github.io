@@ -5,6 +5,7 @@ const supportedLocales = ["en", "ko"];
 const translations = {
     "en": {
         "last_updated": "Last updated",
+        "livestracker": "Livestreams Tracker",
         "members": "Members",
         "chodan": "Chodan",
         "magenta": "Magenta",
@@ -69,6 +70,7 @@ const translations = {
     },
     "ko": {
         "last_updated": "최근 수정일",
+        "livestracker": "라방 목록",
         "members": "멤버",
         "chodan": "쵸단",
         "magenta": "마젠타",

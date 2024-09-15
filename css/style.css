@@ -147,6 +147,7 @@ input {
 
 /* Chart */
 #container_chart {
+  margin-left: 0.5em;
   overflow-y: hidden;
   overflow-x: auto;
 }
@@ -205,9 +206,21 @@ img {
 .out_link:link, .out_link:visited {
   color: #dfdfdf;
 }
+/* For mobile, fixed size and vertically aligned cards */
 @media only screen and (max-width: 768px) {
+  #elem_info_container {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
   .info_elem {
+    margin-left: auto;
+    margin-right: auto;
     min-height: auto;
+    width: 20em;
   }
 }
 
