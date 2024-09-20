@@ -10,6 +10,7 @@ var trainMode = false;
 
 function getViewDiv(elemData, divClass) {
     var text = "<div class='" + divClass + "'>"
+    // Thumbnail
     tPath = "thumbs/missing.jpg";
     tWidth = 290;
     tHeight = 175;
@@ -20,6 +21,7 @@ function getViewDiv(elemData, divClass) {
     }
     text += "<div align='center'><img src='" + tPath + "' ";
     text += "width='" + tWidth + "' height='" + tHeight + "'/></div>";
+    // Info
     text += "<div class='fields_container'>";
     for (const [j, [key, value]] of Object.entries(Object.entries(elemData))) {
         if (key == "thumbnail" || key == "account" || key == "train") {
@@ -289,25 +291,6 @@ function updateChart() {
     }
     
     chart.data(data);
-    
-    /*if (breakdownMembers) {
-        const paths = document.querySelectorAll("g > path[fill-opacity='1']")
-        for (let i = 0; i < indexHapbang.length; ++i) {
-            if (indexHapbang[i]) {
-                const path = paths[i];
-                path.setAttribute("glow", "#0fdfdf");
-                const newPath = path.cloneNode();
-                newPath.setAttribute("data-ac-wrapper-id", newPath.getAttribute("data-ac-wrapper-id") + "0");
-                newPath.id = newPath.id + "0";
-                newPath.setAttribute("stroke", "#0fdfdf");
-                bBox = path.getBoundingClientRect();
-                const cx = bBox.x + bBox.width / 2;
-                const cy = bBox.y + bBox.height / 2;
-                newPath.setAttribute("transform", `rotate(45 ${cx} ${cy})`);
-                path.parentNode.insertBefore(newPath, path);
-            }
-        }
-    }*/
     
     document.getElementById("elem_date").innerHTML = '';
     document.getElementById("elem_info_container").innerHTML = '';
