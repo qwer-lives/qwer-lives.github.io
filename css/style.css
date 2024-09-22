@@ -93,9 +93,6 @@ input {
   transform: scale(1.3);
 }
 @media only screen and (max-width: 768px) {
-  #members_prefix {
-    display: none;
-  }
   #filter_links {
     float: left;
     text-align: left;
@@ -118,31 +115,6 @@ input {
 }
 .horizontal_separator {
   color: #474747;
-}
-
-/* Legend */
-#legend_container {
-  margin-top: 1.5em;
-  margin-bottom: 1em;
-  color: #dfdfdf;
-  text-align: center;
-  font-family: Verdana, Helvetica, Arial, sans-serif, Dotum;
-  font-size: 0.95em;
-}
-.box {
-  position: relative;
-  margin-left: 6em;
-  --color: black;
-}
-.box:before {
-  position: absolute;
-  left: -1.7em;
-  content: "";
-  height: 1.1em;
-  width: 1.1em;
-  margin-bottom: 0.75em;
-  border: 1px solid #474747;
-  background-color: var(--color);
 }
 
 /* Chart */
