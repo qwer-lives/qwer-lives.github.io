@@ -94,10 +94,14 @@ input {
 }
 @media only screen and (max-width: 768px) {
   #filter_links {
-    float: left;
+    float: none;
     text-align: left;
+    margin-top: 0.8em;
     margin-right: auto;
     margin-left: 1em;
+  }
+  #filter_members {
+    float: none;
   }
   input {
     transform: scale(1);
