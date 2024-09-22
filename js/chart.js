@@ -31,6 +31,9 @@ function getViewDiv(elemData, divClass) {
             text += "<br>";
         }
         i18key = "field_" + key.replace(/ /g,"_");
+        if (key == "members" && value.length == 4) {
+            i18key += "_short";
+        }
         cKey = key.charAt(0).toUpperCase() + key.slice(1);
         i18val = translateKey(i18key);
         keySpan = '<span data-i18n-key="' + i18key + '">' + i18val + "</span>";
