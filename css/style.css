@@ -24,7 +24,7 @@ html {
   margin-left: 1em;
   color: #dfdfdf;
   text-align: left;
-  font-family: Verdana, Helvetica, Arial, sans-serif;
+  font-family: Verdana, Helvetica, Arial, sans-serif, Dotum;
   font-size: 0.8em;
 }
 .lang_select_on {
@@ -41,7 +41,7 @@ html {
   margin-right: 1em;
   color: #dfdfdf;
   text-align: right;
-  font-family: Verdana, Helvetica, Arial, sans-serif;
+  font-family: Verdana, Helvetica, Arial, sans-serif, Dotum;
   font-size: 0.8em;
 }
 
@@ -51,8 +51,8 @@ html {
   margin-bottom: 1.8em;
   width: 100%;
   color: #dfdfdf;
-  font-family: Verdana, Helvetica, Arial, sans-serif;
-  font-size: 1.7em;
+  font-family: Verdana, Helvetica, Arial, sans-serif, Dotum;
+  font-size: 1.5em;
   text-align: center;
 }
 @media only screen and (max-width: 768px) {
@@ -67,8 +67,8 @@ html {
   margin-top: 0.4em;
   margin-bottom: 0.4em;
   color: #dfdfdf;
-  font-family: Verdana, Helvetica, Arial, sans-serif;
-  font-size: 0.95em;
+  font-family: Verdana, Helvetica, Arial, sans-serif, Dotum;
+  font-size: 0.9em;
 }
 #filter_container {
   display: flow-root;
@@ -126,7 +126,7 @@ input {
   margin-bottom: 1em;
   color: #dfdfdf;
   text-align: center;
-  font-family: Verdana, Helvetica, Arial, sans-serif;
+  font-family: Verdana, Helvetica, Arial, sans-serif, Dotum;
   font-size: 0.95em;
 }
 .box {
@@ -180,7 +180,7 @@ input {
   margin-bottom: 1em;
   width: 100%;
   color: #dfdfdf;
-  font-family: Verdana, Helvetica, Arial, sans-serif;
+  font-family: Verdana, Helvetica, Arial, sans-serif, Dotum;
   font-size: 1.2em;
   text-align: center;
 }
@@ -194,6 +194,8 @@ input {
   border-radius: 0.5em;
   padding: 0.7em 0.7em;
   margin: 0.25em;
+  font-size: 0.9em;
+  font-family: Verdana, Helvetica, Arial, sans-serif, Dotum;
 }
 img {
   display: inline-block;
@@ -230,7 +232,7 @@ img {
   margin-top: 0; /* take available whitespace */
   height: 1em; /* calc height when limited content */
   text-align: center;
-  font-family: Verdana, Helvetica, Arial, sans-serif;
+  font-family: Verdana, Helvetica, Arial, sans-serif, Dotum;
   font-size: 0.75em;
 }
 #email_link:link, #email_link:visited {
