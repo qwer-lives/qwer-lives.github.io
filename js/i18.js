@@ -74,6 +74,7 @@ const translations = {
         "chzzk": "Chzzk",
         "tv": "TV",
         "showroom": "Showroom",
+        "melon": "Melon",
     },
     "ko": {
         "last_updated": "최근 수정일",
@@ -146,6 +147,7 @@ const translations = {
         "chzzk": "치지직",
         "tv": "TV",
         "showroom": "쇼룸",
+        "melon": "멜론",
     }
 };
 
