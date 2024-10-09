@@ -6,7 +6,6 @@ var selectedPath = null;
 var memberToValue = null;
 var hapbangValue = null;
 var multipleValue = null;
-var trainMode = false;
 
 function getViewDiv(elemData, divClass) {
     var text = "<div class='" + divClass + "'>"
@@ -226,7 +225,7 @@ function updateChart() {
     }
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    const includeTwitchData = urlParams.get('dataTwitch');
+    const trainMode = document.getElementById('train_mode_box').checked;
     const breakdownMembers = getBreakdownMembers();
     
     const linkCheckboxes = document.querySelectorAll('.link_check:checked');
@@ -249,10 +248,12 @@ function updateChart() {
             if (hasPublicLink && !selectedLinks.includes("Public")) {
                 return false;
             }
-            if (elem["platform"] == "DataTwitch" && !includeTwitchData) {
+            if (trainMode && elem["train"] == "False") {
                 return false;
             }
-            if (trainMode && elem["train"] == "False") {
+            platformKey = elem["platform"].toLowerCase();
+            platformChecked = document.getElementById("platform_" + platformKey + "_box").checked;
+            if (!platformChecked) {
                 return false;
             }
             for (let mem of elem["members"]) {
@@ -308,6 +309,24 @@ function modifyBoxIfNeeded(urlParams, field) {
 }
 
 anychart.onDocumentReady(function () {
+    // Generate platform filters
+    baseHtml = `<label>
+          <input type="checkbox" id="platform_%plat%_box" name="platform_%plat%_box" value="%plat%" class="platform_check" onchange="updateChart()" checked/>
+          <span data-i18n-key="%plat%">%plat%</span>
+        </label>
+        <span class="horizontal_separator"> | </span>`
+        
+    platforms = ["twitch", "datatwitch", "instagram", "weverse", "youtube", "qweryoutube", "zenflix", "chzzk", "tv", "showroom", "melon"];
+    innerHtml = `<span id="platform_prefix"><span data-i18n-key="field_platform">Platform</span>:</span>`;
+    for (let i = 0; i < platforms.length; ++i) {
+        html = baseHtml.replaceAll("%plat%", platforms[i]);
+        if (platforms[i] == "datatwitch") {
+            html = html.replace("checked", "");
+        }
+        innerHtml += html;
+    }
+    document.getElementById("filter_platform").innerHTML =innerHtml;
+    
     initializeUserLocale();
     document.getElementById("last_updated").innerHTML = updateDate;
     
@@ -322,9 +341,6 @@ anychart.onDocumentReady(function () {
     
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    if (urlParams.get("trainMode") == "true") {
-        trainMode = true;
-    }
     modifyBoxIfNeeded(urlParams, "chodan");
     modifyBoxIfNeeded(urlParams, "magenta");
     modifyBoxIfNeeded(urlParams, "hina");
@@ -332,6 +348,10 @@ anychart.onDocumentReady(function () {
     modifyBoxIfNeeded(urlParams, "link_public");
     modifyBoxIfNeeded(urlParams, "link_private");
     modifyBoxIfNeeded(urlParams, "link_missing");
+    
+    if (urlParams.get("advancedFilters") == "true") {
+        document.getElementById("advanced_filters").style.display = "flow-root";
+    }
     
     buildChart();
     updateChart();

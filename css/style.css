@@ -63,15 +63,15 @@ html {
 }
 
 /* Filters */
+.filter_container {
+  display: flow-root;
+}
 .filter_div {
   margin-top: 0.4em;
   margin-bottom: 0.4em;
   color: #dfdfdf;
   font-family: Verdana, Helvetica, Arial, sans-serif, Dotum;
   font-size: 0.9em;
-}
-#filter_container {
-  display: flow-root;
 }
 #members_prefix {
   display: default;
