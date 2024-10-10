@@ -77,7 +77,7 @@ html {
   display: default;
   vertical-align: middle;
 }
-#filter_members {
+#filter_members, #filter_platform, #filter_other {
   float: left;
   text-align: left;
   width: auto;
