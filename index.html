@@ -85,6 +85,34 @@
       <div id="filter_platform" class="filter_div">
         <span id="platform_prefix"><span data-i18n-key="field_platform">Platform</span>:</span>
       </div>
+      <div id="filter_account" class="filter_div">
+        <span id="account_prefix"><span data-i18n-key="account">Account</span>:</span>
+        <label>
+          <input type="checkbox" id="chodan_box" name="chodan_box" value="Chodan" class="account_check" onchange="updateChart()" checked>
+          <span data-i18n-key="chodan_filter">Chodan</span>
+        </label>
+        <span class="horizontal_separator"> | </span>
+        <label>
+          <input type="checkbox" id="magenta_box" name="magenta_box" value="Magenta" class="account_check" onchange="updateChart()" checked>
+          <span data-i18n-key="magenta_filter">Magenta</span>
+        </label>
+        <span class="horizontal_separator"> | </span>
+        <label>
+          <input type="checkbox" id="hina_box" name="hina_box" value="Hina" class="account_check" onchange="updateChart()" checked>
+          <span data-i18n-key="hina_filter">Hina</span>
+        </label>
+        <span class="horizontal_separator"> | </span>
+        <label>
+          <input type="checkbox" id="siyeon_box" name="siyeon_box" value="Siyeon" class="account_check" onchange="updateChart()" checked>
+          <span data-i18n-key="siyeon_filter">Siyeon</span>
+        </label>
+        <span class="horizontal_separator"> | </span>
+        <label>
+          <input type="checkbox" id="other_box" name="other_box" value="Other" class="account_check" onchange="updateChart()" checked>
+          <span data-i18n-key="other_filter">Other</span>
+        </label>
+      </div>
+      <br>
       <div id="filter_other" class="filter_div">
         <span id="other_prefix"><span data-i18n-key="other_filter">Other</span>:</span>
         <label>

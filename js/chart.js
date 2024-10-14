@@ -232,6 +232,8 @@ function updateChart() {
     const selectedLinks = [...linkCheckboxes].map(e => (e.getAttribute('value')));
     const memberCheckboxes = document.querySelectorAll('.member_check:checked');
     const selectedMembers = [...memberCheckboxes].map(e => (e.getAttribute('value')));
+    const accountCheckboxes = document.querySelectorAll('.account_check:checked');
+    const selectedAccounts = [...accountCheckboxes].map(e => (e.getAttribute('value')));
     
     var data = [];
     var indexHapbang = [];
@@ -254,6 +256,10 @@ function updateChart() {
             platformKey = elem["platform"].toLowerCase();
             platformChecked = document.getElementById("platform_" + platformKey + "_box").checked;
             if (!platformChecked) {
+                return false;
+            }
+            accountKey = elem["account"] ?? "Other"
+            if (!selectedAccounts.includes(accountKey)) {
                 return false;
             }
             for (let mem of elem["members"]) {
