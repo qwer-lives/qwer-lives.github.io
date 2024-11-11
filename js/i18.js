@@ -39,6 +39,8 @@ const translations = {
         "jinyongjin": "JinYongJin",
         "kwaktube": "Kwaktube",
         "ujeonging": "Ujeonging",
+        "simjamon": "심자몬",
+        "bbogumi": "뽀구미",
         "sezero": "SeZero",
         "kaogaii": "Kaogaii",
         "yuukakato": "YuukaKato",
