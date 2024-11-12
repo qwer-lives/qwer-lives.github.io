@@ -226,6 +226,7 @@ function updateChart() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const trainMode = document.getElementById('train_mode_box').checked;
+    const smartDatesMode = document.getElementById('smart_dates_box').checked;
     const breakdownMembers = getBreakdownMembers();
     
     const linkCheckboxes = document.querySelectorAll('.link_check:checked');
@@ -235,9 +236,32 @@ function updateChart() {
     const accountCheckboxes = document.querySelectorAll('.account_check:checked');
     const selectedAccounts = [...accountCheckboxes].map(e => (e.getAttribute('value')));
     
+    transformedData = {};
+    if (!smartDatesMode) {
+        transformedData = fullData;
+    } else {
+        for (const [date, row] of Object.entries(fullData)) {
+            for (let elem of row) {
+                transformedDate = date;
+                transformedElem = elem;
+                if (elem["start time"] && elem["start time"].substring(0, 2) < "05") {
+                    dateObject = new Date(Date.parse(date));
+                    dateObject = new Date(dateObject.getTime() - (24 * 60 * 60 * 1000));
+                    transformedDate = dateObject.toISOString().split('T')[0];
+                    transformedElem = {...elem};
+                    transformedElem["start time"] += " (+1d)";
+                }
+                if (!(transformedDate in transformedData)) {
+                    transformedData[transformedDate] = [];
+                }
+                transformedData[transformedDate].push(transformedElem);
+            }
+        }
+    }
+    
     var data = [];
     var indexHapbang = [];
-    for (const [date, row] of Object.entries(fullData)) {
+    for (const [date, row] of Object.entries(transformedData)) {
         var goodElems = row.filter(elem => {
             const hasPublicLink = (elem["link"] && elem["link"].startsWith("http"));
             const hasPrivateLink = (elem["link"] && elem["link"].startsWith("Private"));
