@@ -224,6 +224,10 @@ img {
   font-family: Verdana, Helvetica, Arial, sans-serif, Dotum;
   font-size: 0.75em;
 }
+#last_updated_div {
+  font-family: Verdana, Helvetica, Arial, sans-serif, Dotum;
+  font-size: 0.75em;
+}
 #email_link:link, #email_link:visited {
   color: #696969;
 }
