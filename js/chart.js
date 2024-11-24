@@ -6,6 +6,8 @@ var selectedPath = null;
 var memberToValue = null;
 var hapbangValue = null;
 var multipleValue = null;
+var showVideoInfo = false;
+    
 
 function getViewDiv(elemData, divClass) {
     var text = "<div class='" + divClass + "'>"
@@ -24,6 +26,9 @@ function getViewDiv(elemData, divClass) {
     text += "<div class='fields_container'>";
     for (const [j, [key, value]] of Object.entries(Object.entries(elemData))) {
         if (key == "thumbnail" || key == "account" || key == "train") {
+            continue;
+        }
+        if (!showVideoInfo && key == "quality") {
             continue;
         }
         if (j > 0) {
@@ -86,16 +91,6 @@ function getGradient(colors) {
     return ["black"];
 }
 
-function getBreakdownMembers() {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const breakdownMembersParam = urlParams.get('breakdownMembers');
-    if (breakdownMembersParam === 'false') {
-        return false;
-    }
-    return true;
-}
-
 function buildChart() {
     if (chart) {
         return;
@@ -111,31 +106,19 @@ function buildChart() {
     
     var rangesArray = [];
     var colorsArray = [];
-    if (getBreakdownMembers()) {
-        for (let i = 1; i < (1 << memberNames.length); ++i) {
-            curColors = [];
-            for (let j = 0; j < memberNames.length; ++j) {
-                if (i&(1<<j)) {
-                    curColors.push(memberColors[j]);
-                }
+    for (let i = 1; i < (1 << memberNames.length); ++i) {
+        curColors = [];
+        for (let j = 0; j < memberNames.length; ++j) {
+            if (i&(1<<j)) {
+                curColors.push(memberColors[j]);
             }
-            const gradient = getGradient(curColors);
-            rangesArray.push({equal: i});
-            colorsArray.push(gradient);
         }
-        for (let i = 0; i < noGradientElems.length; ++i) {
-            noGradientElems[i].style.display = 'none';
-        }
-    } else {
-        for (let i = 0; i < memberNames.length; i++) {
-            rangesArray.push({equal: memberToValue[memberNames[i]]});
-        }
-        rangesArray.push({equal: hapbangValue});
-        rangesArray.push({equal: multipleValue});
-        colorsArray = memberColors;
-        for (let i = 0; i < noGradientElems.length; ++i) {
-            noGradientElems[i].style.display = 'inline';
-        }
+        const gradient = getGradient(curColors);
+        rangesArray.push({equal: i});
+        colorsArray.push(gradient);
+    }
+    for (let i = 0; i < noGradientElems.length; ++i) {
+        noGradientElems[i].style.display = 'none';
     }
     const customColorScale = anychart.scales.ordinalColor();
     customColorScale.ranges(rangesArray);
@@ -227,7 +210,8 @@ function updateChart() {
     const urlParams = new URLSearchParams(queryString);
     const trainMode = document.getElementById('train_mode_box').checked;
     const smartDatesMode = document.getElementById('smart_dates_box').checked;
-    const breakdownMembers = getBreakdownMembers();
+    showVideoInfo = document.getElementById('video_info_box').checked;
+    const hapbangOnlyMode = document.getElementById('hapbang_only_box').checked;
     
     const linkCheckboxes = document.querySelectorAll('.link_check:checked');
     const selectedLinks = [...linkCheckboxes].map(e => (e.getAttribute('value')));
@@ -260,7 +244,6 @@ function updateChart() {
     }
     
     var data = [];
-    var indexHapbang = [];
     for (const [date, row] of Object.entries(transformedData)) {
         var goodElems = row.filter(elem => {
             const hasPublicLink = (elem["link"] && elem["link"].startsWith("http"));
@@ -286,6 +269,10 @@ function updateChart() {
             if (!selectedAccounts.includes(accountKey)) {
                 return false;
             }
+            const hapbang = (elem["members"].length > 1 || ("people" in elem && elem["people"].length > 0));
+            if (hapbangOnlyMode && !hapbang) {
+                return false;
+            }
             for (let mem of elem["members"]) {
                 if (selectedMembers.includes(mem)) {
                     return true;
@@ -297,26 +284,11 @@ function updateChart() {
             continue;
         }
         var rowValue = 0;
-        var isHapbang = false;
-        if (breakdownMembers) {
-            for (let i = 0; i < goodElems.length; ++i) {
-                if (goodElems[i]["members"].length > 1) {
-                    isHapbang = true;
-                }
-                for (let j = 0; j < goodElems[i]["members"].length; ++j) {
-                    rowValue |= memberToValue[goodElems[i]["members"][j]];
-                }
-            }
-        } else {
-            if (goodElems.length > 1) {
-                rowValue = multipleValue;
-            } else if (goodElems[0]["members"].length > 1 || goodElems[0]["people"]) {
-                rowValue = hapbangValue;
-            } else {
-                rowValue = memberToValue[goodElems[0]["members"][0]];
+        for (let i = 0; i < goodElems.length; ++i) {
+            for (let j = 0; j < goodElems[i]["members"].length; ++j) {
+                rowValue |= memberToValue[goodElems[i]["members"][j]];
             }
         }
-        indexHapbang.push(isHapbang);
         data.push({
             x: date,
             value: rowValue,
