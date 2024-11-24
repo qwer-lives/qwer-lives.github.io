@@ -5,6 +5,7 @@ const supportedLocales = ["en", "ko"];
 const translations = {
     "en": {
         "last_updated": "Last updated",
+        "qwerflix": "QWERflix",
         "livestracker": "Livestreams Tracker",
         "members": "Members",
         "chodan": "Chodan",
@@ -91,6 +92,7 @@ const translations = {
     },
     "ko": {
         "last_updated": "최근 수정일",
+        "qwerflix": "큐플릭스",
         "livestracker": "라방 목록",
         "members": "멤버",
         "chodan": "쵸단",
