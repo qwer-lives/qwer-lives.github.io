@@ -1,5 +1,7 @@
 const memberNames = ["Chodan", "Magenta", "Hina", "Siyeon"];
 const memberColors = ["#e6e3d5", "#fc28fc", "dodgerblue", "lime", "yellow", "darkorange"];
+const maxYear = 2024;
+const minYear = 2019;
 
 var chart = null;
 var selectedPath = null;
@@ -7,7 +9,22 @@ var memberToValue = null;
 var hapbangValue = null;
 var multipleValue = null;
 var showVideoInfo = false;
-    
+var currentYear = 2024;
+
+
+function prevPage() {
+    if (currentYear - 2 >= minYear) {
+        currentYear -= 2;
+        updateChart();
+    }
+}
+
+function nextPage() {
+    if (currentYear + 2 <= maxYear) {
+        currentYear += 2;
+        updateChart();
+    }
+}
 
 function getViewDiv(elemData, divClass) {
     var text = "<div class='" + divClass + "'>"
@@ -220,11 +237,16 @@ function updateChart() {
     const accountCheckboxes = document.querySelectorAll('.account_check:checked');
     const selectedAccounts = [...accountCheckboxes].map(e => (e.getAttribute('value')));
     
+    filteredData = Object.fromEntries(Object.entries(fullData).filter(([date]) => {
+        const intDate = parseInt(date.substring(0, 4));
+        return currentYear-1 <= intDate && intDate <= currentYear
+    }));
+    
     transformedData = {};
     if (!smartDatesMode) {
-        transformedData = fullData;
+        transformedData = filteredData;
     } else {
-        for (const [date, row] of Object.entries(fullData)) {
+        for (const [date, row] of Object.entries(filteredData)) {
             for (let elem of row) {
                 transformedDate = date;
                 transformedElem = elem;
@@ -298,15 +320,25 @@ function updateChart() {
     
     chart.data(data);
     
+    if (currentYear - 2 < minYear) {
+        document.getElementById("prev_page_div").style.visibility = "hidden";
+    } else {
+        document.getElementById("prev_page_div").style.visibility = "visible";
+    }
+    if (currentYear + 2 > maxYear) {
+        document.getElementById("next_page_div").style.visibility = "hidden";
+    } else {
+        document.getElementById("next_page_div").style.visibility = "visible";
+    }
     document.getElementById("elem_date").innerHTML = '';
     document.getElementById("elem_info_container").innerHTML = '';
-    document.getElementById("sep_before_info").style.visibility = 'hidden';
+    document.getElementById("sep_before_info").style.visibility = "hidden";
 }
 
 function modifyBoxIfNeeded(urlParams, field) {
     const checkStatus = urlParams.get(field);
     if (checkStatus != null) {
-        document.getElementById(field + '_box').checked = (checkStatus === 'true');
+        document.getElementById(field + "_box").checked = (checkStatus === "true");
     }
 }
 

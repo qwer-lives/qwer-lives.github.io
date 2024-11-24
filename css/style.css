@@ -14,10 +14,11 @@ html {
 }
 
 /* Header */
-#header_container {
+#header_container, #pages_container {
   display: flow-root;
+  margin-bottom: 0.4em;
 }
-#change_lang_div {
+#change_lang_div, #prev_page_div {
   width: 20%;
   margin: auto;
   float: left;
@@ -30,11 +31,11 @@ html {
 .lang_select_on {
   font-weight: bold;
 }
-.lang_select_off {
+.lang_select_off, .page_clickable {
   cursor: pointer;
   text-decoration: underline;
 }
-#last_updated_div {
+#last_updated_div, #next_page_div {
   width: 70%;
   margin: auto;
   float: right;

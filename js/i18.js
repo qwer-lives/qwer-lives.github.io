@@ -86,6 +86,8 @@ const translations = {
         "tv": "TV",
         "showroom": "Showroom",
         "melon": "Melon",
+        "prev_page": "Prev page",
+        "next_page": "Next page",
     },
     "ko": {
         "last_updated": "최근 수정일",
@@ -168,6 +170,8 @@ const translations = {
         "tv": "TV",
         "showroom": "쇼룸",
         "melon": "멜론",
+        "prev_page": "이전 페이지",
+        "next_page": "다음 페이지",
     }
 };
 
