@@ -4,7 +4,8 @@ html {
   visibility: hidden;
 }
 #body_container {
-  min-height: calc(100vh - 2em); /* you have to minus header and footer width */
+  min-height: calc(100vh - 2.5em); /* you have to minus header and footer width */
+  max-width: calc(100vw - 2em); /* Adjust based on scrollbar width */
 }
 #main_container {
   max-width: 90em;
