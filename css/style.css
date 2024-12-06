@@ -158,7 +158,10 @@ input {
 
 /* Info details */
 #elem_info_container {
-  display: flow-root;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: center;
   margin-left: 1em;
   margin-bottom: 1em;
 }
@@ -172,7 +175,6 @@ input {
   text-align: center;
 }
 .info_elem {
-  float: left;
   color: #dfdfdf;
   min-width: 10em;
   max-width: 20em;

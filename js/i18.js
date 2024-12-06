@@ -155,7 +155,7 @@ const translations = {
         "generalsso": "쏘대장",
         "winter": "겨우디",
         "gomalsook": "고말숙",
-        "changmin": "Changmin",
+        "changmin": "창민",
         "gongparipa": "공파리파",
         "mingsunha": "밍선하",
         "momo88": "모모88",
