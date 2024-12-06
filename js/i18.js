@@ -62,6 +62,7 @@ const translations = {
         "hasinyang": "Hasinyang",
         "godsehee": "Godsehee",
         "bongsoon": "Bongsoon",
+        "jungsorim": "JungSoRim",
         "sezero": "SeZero",
         "kaogaii": "Kaogaii",
         "yuukakato": "YuukaKato",
@@ -169,6 +170,7 @@ const translations = {
         "hasinyang": "하시냥",
         "godsehee": "갓세희",
         "bongsoon": "나무늘봉순",
+        "jungsorim": "정소림",
         "sezero": "세제로",
         "kaogaii": "가오가이",
         "yuukakato": "加藤夕夏",
@@ -223,6 +225,7 @@ function translateKey(key) {
     value = translations[locale][key.toString().toLowerCase()];
     if (!value) {
         console.log("Translation not found: " + locale + " - " + key);
+        return key.toString();
     }
     return value;
 }
