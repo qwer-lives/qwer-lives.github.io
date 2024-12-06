@@ -146,9 +146,23 @@ input {
   padding: 0;
 }
 .info_tooltip {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 0.8em;
+}
+.info_tooltip_column {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
   text-align: left;
   min-width: 18em; /* for loading images */
-  max-width: 20em;
+}
+/* Vertical separtor between columns */
+.info_tooltip_column_separator {
+  width: 1px;
+  background-color: #707070;
 }
 .fields_container {
   overflow: hidden;

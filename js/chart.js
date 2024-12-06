@@ -167,11 +167,35 @@ function buildChart() {
         chart.tooltip().allowLeaveStage(true).position("left-top").useHtml(true).format(function() {
             var text = "";
             text += "<div class='info_tooltip'>";
-            for (let i = 0; i < this.getData("elems").length; i++) {
-                if (i > 0) {
-                    text += "<hr noshade='true' class='anychart-tooltip-separator'>"
+            var columns = [];
+            if (this.getData("elems").length == 4) {
+                columns = [[0,1],[2,3]];
+            } else {
+                let col = [];
+                for (let i = 0; i < this.getData("elems").length; ++i) {
+                    col.push(i);
+                    if (col.length == 3) {
+                        columns.push(col);
+                        col = [];
+                    }
                 }
-                text += getViewDiv(this.getData("elems")[i], "tooltip_elem")
+                if (col.length > 0) {
+                    columns.push(col);
+                }
+            }
+            for (let i = 0; i < columns.length; i++) {
+                if (i > 0) {
+                    text += "<div class='info_tooltip_column_separator'></div>";
+                }
+                text += "<div class='info_tooltip_column'>";
+                for (let j = 0; j < columns[i].length; ++j) {
+                    if (j > 0) {
+                        text += "<hr noshade='true' class='anychart-tooltip-separator'>"
+                    }
+                    let ind = columns[i][j];
+                    text += getViewDiv(this.getData("elems")[ind], "tooltip_elem");
+                }
+                text += "</div>";
             }
             text += "</div>"
             return text;
