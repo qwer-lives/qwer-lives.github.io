@@ -7,6 +7,11 @@ html {
   min-height: calc(100vh - 2.5em); /* you have to minus header and footer width */
   max-width: calc(100vw - 2em); /* Adjust based on scrollbar width */
 }
+@media only screen and (max-width: 768px) {
+  #body_container {
+    max-width: none;
+  }
+}
 #main_container {
   max-width: 90em;
   padding-top: 0.3em;
