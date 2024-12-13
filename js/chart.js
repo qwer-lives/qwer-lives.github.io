@@ -54,8 +54,9 @@ function getViewDiv(elemData, divClass) {
             text += "<span> </span>";
         }
         name = membersValue[i].toLowerCase();
+        keyName = name + "_filter";
         color = memberColors[memberToIndex[name]];
-        text += '<span style="color:' + color + '" data-i18n-key="' + name + '">' + translateKey(name) + "</span>";
+        text += '<span style="color:' + color + '" data-i18n-key="' + keyName + '">' + translateKey(keyName) + "</span>";
     }
     text += "</div>"
     // Info
