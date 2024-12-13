@@ -272,6 +272,7 @@ function updateChart() {
     const smartDatesMode = document.getElementById('smart_dates_box').checked;
     showVideoInfo = document.getElementById('video_info_box').checked;
     const hapbangOnlyMode = document.getElementById('hapbang_only_box').checked;
+    const intersectMembers = document.getElementById('intersect_members_box').checked;
     
     const linkCheckboxes = document.querySelectorAll('.link_check:checked');
     const selectedLinks = [...linkCheckboxes].map(e => (e.getAttribute('value')));
@@ -338,12 +339,21 @@ function updateChart() {
             if (hapbangOnlyMode && !hapbang) {
                 return false;
             }
-            for (let mem of elem["members"]) {
-                if (selectedMembers.includes(mem)) {
-                    return true;
+            if (intersectMembers) {
+                for (let mem of selectedMembers) {
+                    if (!elem["members"].includes(mem)) {
+                        return false;
+                    }
                 }
+                return true;
+            } else {
+                for (let mem of elem["members"]) {
+                    if (selectedMembers.includes(mem)) {
+                        return true;
+                    }
+                }
+                return false;
             }
-            return false;
         });
         if (goodElems.length == 0) {
             continue;
