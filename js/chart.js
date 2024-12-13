@@ -1,3 +1,9 @@
+const memberToIndex = {
+    "chodan": 0,
+    "magenta": 1,
+    "hina": 2,
+    "siyeon": 3
+}
 const memberNames = ["Chodan", "Magenta", "Hina", "Siyeon"];
 const memberColors = ["#e6e3d5", "#fc28fc", "dodgerblue", "lime", "yellow", "darkorange"];
 const maxYear = 2024;
@@ -39,22 +45,34 @@ function getViewDiv(elemData, divClass) {
     }
     text += "<div align='center'><img src='" + tPath + "' ";
     text += "width='" + tWidth + "' height='" + tHeight + "'/></div>";
-    // Info
     text += "<div class='fields_container'>";
+    // Members
+    text += "<div class='field_members'>";
+    const membersValue = elemData["members"];
+    for (let i = 0; i < membersValue.length; ++i) {
+        if (i > 0) {
+            text += "<span> </span>";
+        }
+        name = membersValue[i].toLowerCase();
+        color = memberColors[memberToIndex[name]];
+        text += '<span style="color:' + color + '" data-i18n-key="' + name + '">' + translateKey(name) + "</span>";
+    }
+    text += "</div>"
+    // Info
+    firstElem = true;
     for (const [j, [key, value]] of Object.entries(Object.entries(elemData))) {
-        if (key == "thumbnail" || key == "account" || key == "train") {
+        if (key == "thumbnail" || key == "account" || key == "train" || key == "members") {
             continue;
         }
         if (!showVideoInfo && key == "quality") {
             continue;
         }
-        if (j > 0) {
+        if (firstElem) {
+            firstElem = false;
+        } else {
             text += "<br>";
         }
         i18key = "field_" + key.replace(/ /g,"_");
-        if (key == "members" && value.length == 4) {
-            i18key += "_short";
-        }
         cKey = key.charAt(0).toUpperCase() + key.slice(1);
         i18val = translateKey(i18key);
         keySpan = '<span data-i18n-key="' + i18key + '">' + i18val + "</span>";
@@ -388,9 +406,15 @@ anychart.onDocumentReady(function () {
     initializeUserLocale();
     document.getElementById("last_updated").innerHTML = updateDate;
     
-    const titleLetters = document.querySelectorAll('.title_letter');
-    for (let i = 0; i < titleLetters.length; ++i) {
-        titleLetters[i].style.setProperty('color', memberColors[i]);
+    
+    for (let i = 0; i < memberNames.length; ++i) {
+        const memberName = memberNames[i].toLowerCase();
+        const id = '.' + memberName + '_color';
+        const colorElems = document.querySelectorAll(id);
+        const color = memberColors[memberToIndex[memberName]];
+        for (let j = 0; j < colorElems.length; ++j) {
+            colorElems[j].style.setProperty('color', memberColors[i]);
+        }
     }
     const memberCheckboxes = document.querySelectorAll('.member_check');
     for (let i = 0; i < memberCheckboxes.length; ++i) {

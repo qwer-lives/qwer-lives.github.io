@@ -35,7 +35,9 @@ html {
   font-size: 0.8em;
 }
 .lang_select_on {
+  cursor: default;
   font-weight: bold;
+  text-shadow: 0 0 15px #fff;
 }
 .lang_select_off, .page_clickable {
   cursor: pointer;
@@ -70,6 +72,9 @@ html {
 }
 
 /* Filters */
+.bold_text {
+  font-weight: bold;
+}
 .filter_container {
   display: flow-root;
 }
@@ -174,6 +179,13 @@ input {
   white-space: nowrap;
   text-overflow: ellipsis;
   max-width: 20em;
+}
+.field_members {
+  background: rgb(0,0,0);
+  background: linear-gradient(90deg, rgba(0,0,0,0) 20%, rgba(60,70,80) 40%, rgba(60,70,80) 60%, rgba(0,0,0,0) 80%);
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 0.3em;
 }
 
 /* Info details */
