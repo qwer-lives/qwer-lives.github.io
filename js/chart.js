@@ -32,6 +32,12 @@ function nextPage() {
     }
 }
 
+function getTranslatedSpan(key, extra="") {
+    i18key = key.toLowerCase().replace(/ /g,"_");
+    i18val = translateKey(i18key);
+    return "<span " + extra + " data-i18n-key='" + i18key + "'>" + i18val + "</span>";
+}
+
 function getViewDiv(elemData, divClass) {
     var text = "<div class='" + divClass + "'>"
     // Thumbnail
@@ -46,26 +52,50 @@ function getViewDiv(elemData, divClass) {
     text += "<div align='center'><img src='" + tPath + "' ";
     text += "width='" + tWidth + "' height='" + tHeight + "'/></div>";
     text += "<div class='fields_container'>";
-    // Members
-    text += "<div class='field_members'>";
+    // Members and title
+    text += "<div class='field_members_title'>";
     const membersValue = elemData["members"];
     for (let i = 0; i < membersValue.length; ++i) {
         if (i > 0) {
             text += "<span> </span>";
         }
         name = membersValue[i].toLowerCase();
-        keyName = name + "_filter";
         color = memberColors[memberToIndex[name]];
-        text += '<span style="color:' + color + '" data-i18n-key="' + keyName + '">' + translateKey(keyName) + "</span>";
+        colorProperty = "style='color:" + color + "'";
+        text += getTranslatedSpan(membersValue[i] + "_filter", colorProperty);
     }
-    text += "</div>"
-    // Info
-    firstElem = true;
-    for (const [j, [key, value]] of Object.entries(Object.entries(elemData))) {
-        if (key == "thumbnail" || key == "account" || key == "train" || key == "members") {
-            continue;
+    if ("title" in elemData) {
+        text += "<div class='field_title'>" + elemData["title"] + "</div>";
+    }
+    text += "</div>";
+    // Start time and duration
+    timeElems = [];
+    if ("start time" in elemData) {
+        timeElems.push(["start time", elemData["start time"]]);
+    }
+    if ("duration" in elemData) {
+        timeElems.push(["duration", elemData["duration"]]);
+    }
+    if (timeElems.length > 0) {
+        text += "<div class='field_leftright'>";
+        for (let i = 0; i < timeElems.length; ++i) {
+            translatedSpan = getTranslatedSpan("field_" + timeElems[i][0]);
+            text += (i == 0) ? "<div class='field_left'>" : "<div class='field_right'>";
+            text += getTranslatedSpan("field_" + timeElems[i][0]) + "<span>: </span><span>" + timeElems[i][1] + "</span>"
+            if (timeElems[i][0] == "start time" && elemData["extra day"]) {
+                text += "<span class='extra_day'> +1</span>";
+            }
+            text += "</div>";
         }
-        if (!showVideoInfo && key == "quality") {
+        text += "</div>"
+    }
+    // Other fields
+    const fieldsToIgnore = ["thumbnail", "account", "train", "members", "title",
+                            "duration", "start time", "extra day", "platform", "link"];
+    firstElem = true;
+    text += "<div class='other_fields'>";
+    for (const [j, [key, value]] of Object.entries(Object.entries(elemData))) {
+        if (fieldsToIgnore.includes(key) || (!showVideoInfo && key == "quality")) {
             continue;
         }
         if (firstElem) {
@@ -73,41 +103,50 @@ function getViewDiv(elemData, divClass) {
         } else {
             text += "<br>";
         }
-        i18key = "field_" + key.replace(/ /g,"_");
-        cKey = key.charAt(0).toUpperCase() + key.slice(1);
-        i18val = translateKey(i18key);
-        keySpan = '<span data-i18n-key="' + i18key + '">' + i18val + "</span>";
-        text += keySpan + "<span>: </span>";
-        if (key == "link") {
-            if (value.startsWith("http")) {
-                var hostname = new URL(value).hostname;
-                hostname = hostname.replace('www.', '');
-                hostname = hostname.replace('.com', '');
-                hostname = hostname.replace('.io', '');
-                hostname = hostname.charAt(0).toUpperCase() + hostname.slice(1);
-                text += "<a class='out_link' target='_blank' href='" + value + "'>" + hostname + "</a>";
-            } else {
-                text += '<span data-i18n-key="' + value + '">' + translateKey(value) + "</span>";
-            }
-        } else if (key == "members" || key == "people") {
+        text += getTranslatedSpan("field_" + key) + "<span>: </span>";
+        if (key == "people") {
             for (let i = 0; i < value.length; ++i) {
                 if (i > 0) {
                     text += "<span>, </span>";
                 }
-                text += '<span data-i18n-key="' + value[i] + '">' + translateKey(value[i]) + "</span>";
-            }
-        } else if (key == "platform") {
-            text += '<span data-i18n-key="' + value + '">' + translateKey(value) + "</span>";
-            if (elemData["account"]) {
-                const account = elemData["account"];
-                text += "<span> (</span>";
-                text += '<span data-i18n-key="' + account + '">' + translateKey(account) + "</span><span>)</span>";
+                text += getTranslatedSpan(value[i]);
             }
         } else {
             text += '<span>' + value + '</span>';
         }
     }
-    text += "</div></div>"
+    text += "</div>";
+    // Platform and link
+    text += "<div class='field_leftright'>";
+    text += "<div class='field_left'>" + getTranslatedSpan(elemData["platform"]);
+    if (elemData["account"]) {
+        const account = elemData["account"];
+        color = memberColors[memberToIndex[account.toLowerCase()]];
+        colorProperty = "style='color:" + color + "; font-weight: bold'";
+        text += "<span> (</span>" + getTranslatedSpan(account + "_filter", colorProperty) + "<span>)</span>";
+    }
+    text += "</div>";
+    if ("link" in elemData) {
+        text += "<div class='field_right'>";
+        value = elemData["link"];
+        if (value.startsWith("http")) {
+            platform = elemData["platform"].toLowerCase();
+            normalizedPlatform = ["qweryoutube", "zenflix"].includes(platform) ? "youtube" : platform;
+            iconPath = "icons/" + normalizedPlatform + ".svg";
+            text += "<a class='out_link' target='_blank' href='" + value + "'>" + getTranslatedSpan("field_link");
+            text += "<img class='platform_icon' src='" + iconPath + "'></a>";
+            /*var hostname = new URL(value).hostname;
+            hostname = hostname.replace('www.', '');
+            hostname = hostname.replace('.com', '');
+            hostname = hostname.replace('.io', '');
+            hostname = hostname.charAt(0).toUpperCase() + hostname.slice(1);
+            text += "<a class='out_link' target='_blank' href='" + value + "'>" + hostname + " 🔗</a>";*/
+        } else {
+            text += getTranslatedSpan(value);
+        }
+        text += "</div>";
+    }
+    text += "</div></div></div>"
     return text;
 }
 
@@ -307,7 +346,7 @@ function updateChart() {
                     dateObject = new Date(dateObject.getTime() - (24 * 60 * 60 * 1000));
                     transformedDate = dateObject.toISOString().split('T')[0];
                     transformedElem = {...elem};
-                    transformedElem["start time"] += " (+1d)";
+                    transformedElem["extra day"] = true;
                 }
                 if (!(transformedDate in transformedData)) {
                     transformedData[transformedDate] = [];
