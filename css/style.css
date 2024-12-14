@@ -43,13 +43,33 @@ html {
   cursor: pointer;
   text-decoration: underline;
 }
-#qwerflix_div, #next_page_div, #last_updated_div {
+#qwerflix_div, #last_updated_div {
   width: 70%;
   margin: auto;
   float: right;
   margin-right: 1em;
   color: #dfdfdf;
   text-align: right;
+  font-family: Verdana, Helvetica, Arial, sans-serif, Dotum;
+  font-size: 0.8em;
+}
+#next_page_div {
+  width: 20%;
+  margin: auto;
+  float: right;
+  margin-right: 1em;
+  color: #dfdfdf;
+  text-align: right;
+  font-family: Verdana, Helvetica, Arial, sans-serif, Dotum;
+  font-size: 0.8em;
+}
+#years_indicator_div {
+  width: 50%;
+  margin: auto;
+  float: left;
+  margin-left: 1em;
+  color: #dfdfdf;
+  text-align: center;
   font-family: Verdana, Helvetica, Arial, sans-serif, Dotum;
   font-size: 0.8em;
 }

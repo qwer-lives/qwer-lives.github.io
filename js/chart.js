@@ -281,11 +281,14 @@ function updateChart() {
     const accountCheckboxes = document.querySelectorAll('.account_check:checked');
     const selectedAccounts = [...accountCheckboxes].map(e => (e.getAttribute('value')));
     
+    const leftYear = currentYear-1;
+    document.getElementById('years_indicator_div').textContent = leftYear + " ~ " + currentYear;
+
     filteredData = Object.fromEntries(Object.entries(fullData).filter(([date]) => {
         const intDate = parseInt(date.substring(0, 4));
-        return currentYear-1 <= intDate && intDate <= currentYear
+        return leftYear <= intDate && intDate <= currentYear
     }));
-    
+
     transformedData = {};
     if (!smartDatesMode) {
         transformedData = filteredData;
