@@ -244,6 +244,7 @@ function translatePage() {
 
 function changeLocale(loc) {
     locale = loc;
+    localStorage.setItem("locale", loc);
     document.querySelector("#lang_select_ko").classList.toggle("lang_select_on", (locale == "ko"));
     document.querySelector("#lang_select_ko").classList.toggle("lang_select_off", (locale != "ko"));
     document.querySelector("#lang_select_en").classList.toggle("lang_select_on", (locale == "en"));
@@ -251,19 +252,26 @@ function changeLocale(loc) {
     translatePage();
 }
 
-function initializeUserLocale() {
+function getUserLocale() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    var userLocale = urlParams.get('locale');
-    if (!userLocale) {
-        locales = navigator.languages.map((loc) => loc.split("-")[0]);
-        if (locales.length > 0 && supportedLocales.includes(locales[0])) {
-            userLocale = locales[0];
-        }
+    var userLocale = urlParams.get("locale");
+    if (userLocale) {
+        return userLocale;
     }
-    if (!userLocale) {
-        userLocale = "ko";
+    userLocale = localStorage.getItem("locale");
+    if (userLocale) {
+        return userLocale;
     }
+    locales = navigator.languages.map((loc) => loc.split("-")[0]);
+    if (locales.length > 0 && supportedLocales.includes(locales[0])) {
+        return locales[0];
+    }
+    return "ko";
+}
+
+function initializeUserLocale() {
+    const userLocale = getUserLocale();
     changeLocale(userLocale);
 }
 
