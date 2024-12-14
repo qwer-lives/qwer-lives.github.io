@@ -7,7 +7,7 @@ const memberToIndex = {
 const memberNames = ["Chodan", "Magenta", "Hina", "Siyeon"];
 const memberColors = ["#e6e3d5", "#fc28fc", "dodgerblue", "lime", "yellow", "darkorange"];
 const maxYear = 2024;
-const minYear = 2019;
+const minYear = 2017;
 
 var chart = null;
 var selectedPath = null;
@@ -153,6 +153,8 @@ function buildChart() {
         rangesArray.push({equal: i});
         colorsArray.push(gradient);
     }
+    rangesArray.push({equal: -1});
+    colorsArray.push("#2d333b");
     for (let i = 0; i < noGradientElems.length; ++i) {
         noGradientElems[i].style.display = 'none';
     }
@@ -283,11 +285,14 @@ function updateChart() {
     
     const leftYear = currentYear-1;
     document.getElementById('years_indicator_div').textContent = leftYear + " ~ " + currentYear;
-
     filteredData = Object.fromEntries(Object.entries(fullData).filter(([date]) => {
         const intDate = parseInt(date.substring(0, 4));
         return leftYear <= intDate && intDate <= currentYear
     }));
+    countPerYear = {};
+    for (let i = leftYear; i <= currentYear; ++i) {
+        countPerYear[i.toString()] = 0;
+    }
 
     transformedData = {};
     if (!smartDatesMode) {
@@ -367,11 +372,23 @@ function updateChart() {
                 rowValue |= memberToValue[goodElems[i]["members"][j]];
             }
         }
+        const dateYear = date.substring(0, 4);
+        countPerYear[dateYear] += 1;
         data.push({
             x: date,
             value: rowValue,
             elems: goodElems,
         });
+    }
+    
+    for (const [year, count] of Object.entries(countPerYear)) {
+        if (count == 0) {
+            data.push({
+                x: year + "-12-31",
+                value: -1,
+                elems: [],
+            });
+        }
     }
     
     chart.data(data);
