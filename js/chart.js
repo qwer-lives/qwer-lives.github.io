@@ -462,7 +462,7 @@ anychart.onDocumentReady(function () {
         </label>
         <span class="horizontal_separator"> | </span>`
         
-    platforms = ["twitch", "datatwitch", "instagram", "weverse", "youtube", "qweryoutube", "zenflix", "chzzk", "tv", "showroom", "melon"];
+    platforms = ["twitch", "datatwitch", "instagram", "weverse", "youtube", "qweryoutube", "zenflix", "chzzk", "tv", "showroom", "melon", "afreeca", "soop"];
     innerHtml = `<span id="platform_prefix"><span data-i18n-key="field_platform">Platform</span>:</span>`;
     for (let i = 0; i < platforms.length; ++i) {
         html = baseHtml.replaceAll("%plat%", platforms[i]);
