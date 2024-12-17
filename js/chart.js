@@ -1,19 +1,29 @@
-const memberToIndex = {
-    "chodan": 0,
-    "magenta": 1,
-    "hina": 2,
-    "siyeon": 3
-}
-const memberNames = ["Chodan", "Magenta", "Hina", "Siyeon"];
-const memberColors = ["#e6e3d5", "#fc28fc", "dodgerblue", "lime", "yellow", "darkorange"];
+const membersInfo = {
+    chodan: {
+        value: 0,
+        color: "#e6e3d5",
+    },
+    magenta: {
+        value: 1,
+        color: "#fc28fc",
+    },
+    hina: {
+        value: 2,
+        color: "dodgerblue",
+    },
+    siyeon: {
+        value: 3,
+        color: "lime",
+    },
+};
+const linkPlatforms = ["chzzk", "instagram", "weverse"];
 const maxYear = 2024;
 const minYear = 2017;
 
 var chart = null;
 var selectedPath = null;
-var memberToValue = null;
 var hapbangValue = null;
-var multipleValue = null;
+var customColorScale = null;
 var showVideoInfo = false;
 var currentYear = 2024;
 
@@ -38,6 +48,15 @@ function getTranslatedSpan(key, extra="") {
     return "<span " + extra + " data-i18n-key='" + i18key + "'>" + i18val + "</span>";
 }
 
+function getPlatformFromLink(link) {
+    for (let platform of linkPlatforms) {
+        if (link.includes(platform)) {
+            return platform;
+        }
+    }
+    return "youtube";
+}
+
 function getViewDiv(elemData, divClass) {
     var text = "<div class='" + divClass + "'>"
     // Thumbnail
@@ -60,7 +79,7 @@ function getViewDiv(elemData, divClass) {
             text += "<span> </span>";
         }
         name = membersValue[i].toLowerCase();
-        color = memberColors[memberToIndex[name]];
+        color = membersInfo[name].color;
         colorProperty = "style='color:" + color + "'";
         text += getTranslatedSpan(membersValue[i] + "_filter", colorProperty);
     }
@@ -121,7 +140,7 @@ function getViewDiv(elemData, divClass) {
     text += "<div class='field_left'>" + getTranslatedSpan(elemData["platform"]);
     if (elemData["account"]) {
         const account = elemData["account"];
-        color = memberColors[memberToIndex[account.toLowerCase()]];
+        color = membersInfo[account.toLowerCase()].color;
         colorProperty = "style='color:" + color + "; font-weight: bold'";
         text += "<span> (</span>" + getTranslatedSpan(account + "_filter", colorProperty) + "<span>)</span>";
     }
@@ -131,16 +150,10 @@ function getViewDiv(elemData, divClass) {
         value = elemData["link"];
         if (value.startsWith("http")) {
             platform = elemData["platform"].toLowerCase();
-            normalizedPlatform = ["qweryoutube", "zenflix"].includes(platform) ? "youtube" : platform;
+            normalizedPlatform = getPlatformFromLink(value);
             iconPath = "icons/" + normalizedPlatform + ".svg";
             text += "<a class='out_link' target='_blank' href='" + value + "'>" + getTranslatedSpan("field_link");
             text += "<img class='platform_icon' src='" + iconPath + "'></a>";
-            /*var hostname = new URL(value).hostname;
-            hostname = hostname.replace('www.', '');
-            hostname = hostname.replace('.com', '');
-            hostname = hostname.replace('.io', '');
-            hostname = hostname.charAt(0).toUpperCase() + hostname.slice(1);
-            text += "<a class='out_link' target='_blank' href='" + value + "'>" + hostname + " 🔗</a>";*/
         } else {
             text += getTranslatedSpan(value);
         }
@@ -150,56 +163,10 @@ function getViewDiv(elemData, divClass) {
     return text;
 }
 
-function getGradient(colors) {
-    if (curColors.length == 1) {
-        return colors;
-    }
-    if (curColors.length == 2) {
-        return [`.49 ${colors[0]}`, `.50 ${colors[1]}`];
-    }
-    if (curColors.length == 3) {
-        return [`.32 ${colors[0]}`, `.33 ${colors[1]}`, `.65 ${colors[1]}`, `.66 ${colors[2]}`]
-    }
-    if (curColors.length == 4) {
-        return [`.24 ${colors[0]}`, `.25 ${colors[1]}`, `.49 ${colors[1]}`, `.50 ${colors[2]}`, `.74 ${colors[2]}`, `.75 ${colors[3]}`]
-    }
-    return ["black"];
-}
-
 function buildChart() {
     if (chart) {
         return;
     }
-    const noGradientElems = document.querySelectorAll('.nogradient');
-    
-    memberToValue = {};
-    for (let i = 0; i < memberNames.length; ++i) {
-        memberToValue[memberNames[i]] = (1 << i);
-    }
-    hapbangValue = (1 << (memberNames.length - 1)) + 1;
-    multipleValue = hapbangValue + 1;
-    
-    var rangesArray = [];
-    var colorsArray = [];
-    for (let i = 1; i < (1 << memberNames.length); ++i) {
-        curColors = [];
-        for (let j = 0; j < memberNames.length; ++j) {
-            if (i&(1<<j)) {
-                curColors.push(memberColors[j]);
-            }
-        }
-        const gradient = getGradient(curColors);
-        rangesArray.push({equal: i});
-        colorsArray.push(gradient);
-    }
-    rangesArray.push({equal: -1});
-    colorsArray.push("#2d333b");
-    for (let i = 0; i < noGradientElems.length; ++i) {
-        noGradientElems[i].style.display = 'none';
-    }
-    const customColorScale = anychart.scales.ordinalColor();
-    customColorScale.ranges(rangesArray);
-    customColorScale.colors(colorsArray);
     
     chart = anychart.calendar();
     chart.contextMenu(false);
@@ -219,7 +186,6 @@ function buildChart() {
         .hovered()
             .fill({color: "black", opacity: 0.3})
             .stroke({color: '#dfdfdf', thickness: 2});
-  
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     if (isMobile) {
         chart.tooltip(false);
@@ -406,10 +372,19 @@ function updateChart() {
             continue;
         }
         var rowValue = 0;
+        var hasHapbang = false;
         for (let i = 0; i < goodElems.length; ++i) {
-            for (let j = 0; j < goodElems[i]["members"].length; ++j) {
-                rowValue |= memberToValue[goodElems[i]["members"][j]];
+            const elem = goodElems[i];
+            if (elem["members"].length > 1 || ("people" in elem && elem["people"].length > 0)) {
+                hasHapbang = true;
             }
+            for (let j = 0; j < elem["members"].length; ++j) {
+                memberName = elem["members"][j].toLowerCase();
+                rowValue |= (1 << membersInfo[memberName].value);
+            }
+        }
+        if (hasHapbang) {
+            value += hapbangValue;
         }
         const dateYear = date.substring(0, 4);
         countPerYear[dateYear] += 1;
@@ -454,7 +429,50 @@ function modifyBoxIfNeeded(urlParams, field) {
     }
 }
 
+function getGradient(colors) {
+    if (curColors.length == 1) {
+        return colors;
+    }
+    if (curColors.length == 2) {
+        return [`.49 ${colors[0]}`, `.50 ${colors[1]}`];
+    }
+    if (curColors.length == 3) {
+        return [`.32 ${colors[0]}`, `.33 ${colors[1]}`, `.65 ${colors[1]}`, `.66 ${colors[2]}`]
+    }
+    if (curColors.length == 4) {
+        return [`.24 ${colors[0]}`, `.25 ${colors[1]}`, `.49 ${colors[1]}`, `.50 ${colors[2]}`, `.74 ${colors[2]}`, `.75 ${colors[3]}`]
+    }
+    return ["black"];
+}
+
 anychart.onDocumentReady(function () {
+    // Initialize arrays and colors
+    const numMembers = Object.keys(membersInfo).length;
+    hapbangValue = (1 << (numMembers - 1)) + 1;
+    var rangesArray = [];
+    var colorsArray = [];
+    for (let i = 1; i < (1 << numMembers); ++i) {
+        curColors = [];
+        j = 0;
+        for (const [memberName, info] of Object.entries(membersInfo)) {
+            if (i&(1 << j)) {
+                curColors.push(info.color);
+            }
+            ++j;
+        }
+        const gradient = getGradient(curColors);
+        rangesArray.push({equal: i});
+        rangesArray.push({equal: i + hapbangValue});
+        colorsArray.push(gradient);
+        colorsArray.push(gradient);
+    }
+    
+    rangesArray.push({equal: -1});
+    colorsArray.push("#2d333b");
+    customColorScale = anychart.scales.ordinalColor();
+    customColorScale.ranges(rangesArray);
+    customColorScale.colors(colorsArray);
+
     // Generate platform filters
     baseHtml = `<label>
           <input type="checkbox" id="platform_%plat%_box" name="platform_%plat%_box" value="%plat%" class="platform_check" onchange="updateChart()" checked/>
@@ -476,19 +494,17 @@ anychart.onDocumentReady(function () {
     initializeUserLocale();
     document.getElementById("last_updated").innerHTML = updateDate;
     
-    
-    for (let i = 0; i < memberNames.length; ++i) {
-        const memberName = memberNames[i].toLowerCase();
-        const id = '.' + memberName + '_color';
-        const colorElems = document.querySelectorAll(id);
-        const color = memberColors[memberToIndex[memberName]];
+    for (const [memberName, info] of Object.entries(membersInfo)) {
+        const colorClass = '.' + memberName + '_color';
+        const colorElems = document.querySelectorAll(colorClass);
         for (let j = 0; j < colorElems.length; ++j) {
-            colorElems[j].style.setProperty('color', memberColors[i]);
+            colorElems[j].style.setProperty('color', info.color);
         }
-    }
-    const memberCheckboxes = document.querySelectorAll('.member_check');
-    for (let i = 0; i < memberCheckboxes.length; ++i) {
-        memberCheckboxes[i].style.setProperty('accent-color', memberColors[i]);
+        const accentColorClass = '.' + memberName + '_accentcolor';
+        const accentColorElems = document.querySelectorAll(accentColorClass);
+        for (let j = 0; j < accentColorElems.length; ++j) {
+            accentColorElems[j].style.setProperty('accent-color', info.color);
+        }
     }
     
     const queryString = window.location.search;
@@ -509,3 +525,4 @@ anychart.onDocumentReady(function () {
     updateChart();
     document.getElementsByTagName("html")[0].style.visibility = "visible";
 });
+
