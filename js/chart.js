@@ -174,12 +174,22 @@ function buildChart() {
     chart.colorScale(customColorScale);
     chart.colorRange(false)
     
+    const stroke = {
+        keys: ["0 rgba(155,5,0,0.8)", "1 rgba(255,215,1)"],
+        lineJoin: "round",
+        angle: 45,
+        thickness: 3,
+    };
+    
     chart.months()
         .stroke("#474747")
         .noDataStroke("#474747");
     chart.days()
         .spacing(4)
-        .stroke(false)
+        .stroke(function() {
+            return false;
+            //return this.value >= hapbangValue ? stroke : false;
+        })
         .noDataStroke(false)
         .noDataFill("#2d333b")
         .noDataHatchFill(false)
