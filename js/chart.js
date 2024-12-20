@@ -69,6 +69,9 @@ function getViewDiv(elemData, divClass) {
         tHeight = elemData["thumbnail"][2];
     }
     text += "<div align='center'><img src='" + tPath + "' ";
+    if (elemData["hapbang"]) {
+        text += "class='hapbang' ";
+    }
     text += "width='" + tWidth + "' height='" + tHeight + "'/></div>";
     text += "<div class='fields_container'>";
     // Members and title
@@ -109,7 +112,7 @@ function getViewDiv(elemData, divClass) {
         text += "</div>"
     }
     // Other fields
-    const fieldsToIgnore = ["thumbnail", "account", "train", "members", "title",
+    const fieldsToIgnore = ["thumbnail", "account", "train", "members", "title", "hapbang",
                             "duration", "start time", "extra day", "platform", "link"];
     firstElem = true;
     text += "<div class='other_fields'>";
@@ -178,7 +181,7 @@ function buildChart() {
         keys: ["0 rgba(155,5,0,0.8)", "1 rgba(255,215,1)"],
         lineJoin: "round",
         angle: 45,
-        thickness: 3,
+        thickness: 2.5,
     };
     
     chart.months()
@@ -358,8 +361,7 @@ function updateChart() {
             if (!selectedAccounts.includes(accountKey)) {
                 return false;
             }
-            const hapbang = (elem["members"].length > 1 || ("people" in elem && elem["people"].length > 0));
-            if (hapbangOnlyMode && !hapbang) {
+            if (hapbangOnlyMode && !elem["hapbang"]) {
                 return false;
             }
             if (intersectMembers) {
@@ -385,16 +387,14 @@ function updateChart() {
         var hasHapbang = false;
         for (let i = 0; i < goodElems.length; ++i) {
             const elem = goodElems[i];
-            if (elem["members"].length > 1 || ("people" in elem && elem["people"].length > 0)) {
-                hasHapbang = true;
-            }
+            hasHapbang |= elem["hapbang"];
             for (let j = 0; j < elem["members"].length; ++j) {
                 memberName = elem["members"][j].toLowerCase();
                 rowValue |= (1 << membersInfo[memberName].value);
             }
         }
         if (hasHapbang) {
-            value += hapbangValue;
+            rowValue += hapbangValue;
         }
         const dateYear = date.substring(0, 4);
         countPerYear[dateYear] += 1;
@@ -458,7 +458,7 @@ function getGradient(colors) {
 anychart.onDocumentReady(function () {
     // Initialize arrays and colors
     const numMembers = Object.keys(membersInfo).length;
-    hapbangValue = (1 << (numMembers - 1)) + 1;
+    hapbangValue = (1 << numMembers) + 1;
     var rangesArray = [];
     var colorsArray = [];
     for (let i = 1; i < (1 << numMembers); ++i) {
