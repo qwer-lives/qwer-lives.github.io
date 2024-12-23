@@ -91,26 +91,21 @@ function getViewDiv(elemData, divClass) {
     }
     text += "</div>";
     // Start time and duration
-    timeElems = [];
-    if ("start time" in elemData) {
-        timeElems.push(["start time", elemData["start time"]]);
-    }
+    text += "<div class='field_leftright'>";
     if ("duration" in elemData) {
-        timeElems.push(["duration", elemData["duration"]]);
+        text += "<div class='field_left'>" + getTranslatedSpan("field_duration") + "<span>: </span>";
+        text += "<span>" + elemData["duration"] + "</span></div>";
     }
-    if (timeElems.length > 0) {
-        text += "<div class='field_leftright'>";
-        for (let i = 0; i < timeElems.length; ++i) {
-            translatedSpan = getTranslatedSpan("field_" + timeElems[i][0]);
-            text += (i == 0) ? "<div class='field_left'>" : "<div class='field_right'>";
-            text += getTranslatedSpan("field_" + timeElems[i][0]) + "<span>: </span><span>" + timeElems[i][1] + "</span>"
-            if (timeElems[i][0] == "start time" && elemData["extra day"]) {
-                text += "<span class='extra_day'> +1</span>";
-            }
-            text += "</div>";
+    
+    if ("start time" in elemData) {
+        text += "<div class='field_right'>" + getTranslatedSpan("field_start_time") + "<span>: </span>";
+        text += "<span>" + elemData["start time"] + "</span>"
+        if (elemData["extra day"]) {
+            text += "<span class='extra_day'> +1</span>";
         }
-        text += "</div>"
+        text += "</div>";
     }
+    text += "</div>";
     // Other fields
     const fieldsToIgnore = ["thumbnail", "account", "train", "members", "title", "hapbang",
                             "duration", "start time", "extra day", "platform", "link"];
