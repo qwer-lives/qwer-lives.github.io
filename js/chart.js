@@ -181,9 +181,11 @@ function buildChart() {
         keys: ["0 rgba(155,5,0,0.8)", "1 rgba(255,215,1)"],
         lineJoin: "round",
         angle: 45,
-        thickness: 2.5,
+        thickness: 2,
     };
     
+    chart.years()
+        .underSpace(20);
     chart.months()
         .stroke("#474747")
         .noDataStroke("#474747");
@@ -316,6 +318,8 @@ function updateChart() {
     if (!smartDatesMode) {
         transformedData = filteredData;
     } else {
+        const urlParams = new URLSearchParams(queryString);
+        missingToPrivate = !(urlParams.get("advancedFilters") == "true");
         for (const [date, row] of Object.entries(filteredData)) {
             for (let elem of row) {
                 transformedDate = date;
@@ -326,6 +330,9 @@ function updateChart() {
                     transformedDate = dateObject.toISOString().split('T')[0];
                     transformedElem = {...elem};
                     transformedElem["extra day"] = true;
+                }
+                if (missingToPrivate && !("link" in transformedElem)) {
+                    transformedElem["link"] = "Private";
                 }
                 if (!(transformedDate in transformedData)) {
                     transformedData[transformedDate] = [];
